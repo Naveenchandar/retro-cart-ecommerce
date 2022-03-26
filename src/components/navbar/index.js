@@ -1,16 +1,24 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import './index.css';
 
 function NavBar() {
+    const { user, updateUser } = useAuth();
+    const navigate = useNavigate();
+    const handleLogout = () => {
+        updateUser(null);
+        navigate('/login');
+        localStorage.removeItem('retro-token');
+    }
     return (
         <section id="navbar">
             <div className="nav_group">
                 <nav className="nav_bar flex_row justify_spacebtw">
                     <div className="nav_options">
-                        <a className="navbar_brand nav_link align_center" href="../../index.html">
+                        <Link to="/" className="navbar_brand nav_link align_center">
                             Retro Cart
-                        </a>
+                        </Link>
                     </div>
                     {/* <div className="nav_search flex align_center justify_center">
                         <input type="search" placeholder="Search Products" className="input" aria-label="Search Products" />
@@ -30,8 +38,14 @@ function NavBar() {
                                 <span>0</span>
                             </span>
                         </a>
-                        <button className="btn auth_btn"><Link to="/">Login</Link></button>
-                        <button className="btn auth_btn"><Link to="/about">Sign up</Link></button>
+                        {user?.email ?
+                            <button className="btn auth_btn" onClick={handleLogout}>Logout</button>
+                            :
+                            <>
+                                <button className="btn auth_btn"><Link to="/login">Login</Link></button>
+                                <button className="btn auth_btn"><Link to="/signup">Sign up</Link></button>
+                            </>
+                        }
                     </div>
                 </nav>
             </div>

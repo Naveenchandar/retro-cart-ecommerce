@@ -1,13 +1,12 @@
 import React from 'react'
-import NavBar from '../navbar';
+import { Link } from 'react-router-dom';
 import './auth.css';
 
 function Login(props) {
-    const { handleInputChange, handleLogin, info, errorInfo, loading } = props;
+    const { handleInputChange, handleLogin, info, errorInfo, togglePassword, showPassword, handleTestLogin } = props;
     return (
-        <>
-            <NavBar />
-            <section id="login">
+        <section id="login">
+            <form onSubmit={handleLogin}>
                 <div className="flex flex_column h_screen_100">
                     <div className="login_body border px-4 py-2">
                         <div className="login_header">
@@ -24,7 +23,7 @@ function Login(props) {
                                     value={info?.email}
                                 />
                                 {errorInfo?.email && (
-                                    <p>{errorInfo.email}</p>
+                                    <p className='input_errormsg'>{errorInfo.email}</p>
                                 )}
                             </div>
                         </div>
@@ -34,39 +33,37 @@ function Login(props) {
                                 <div className="input_password">
                                     <span>
                                         <input
-                                            type="text"
+                                            type={showPassword ? "text" : "password"}
                                             placeholder="**********"
                                             className="input"
                                             onChange={(e) => handleInputChange(e.target.value, 'password')}
                                             value={info?.password}
                                         />
-                                        <i className='fa fa-eye-slash'></i>
+                                        <i className={showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'} onClick={togglePassword}></i>
                                     </span>
                                 </div>
                                 {errorInfo?.password && (
-                                    <p>{errorInfo.password}</p>
+                                    <p className='input_errormsg'>{errorInfo.password}</p>
                                 )}
                             </div>
                         </div>
-                        <div className="login_checkbox flex justify_spacebtw my-1">
-                            <div>
-                                <input type="checkbox" /> &ensp;
-                                <span>Remember me</span>
-                            </div>
-                            <div>
-                                <label className="primary_text_color">Forgot your password ?</label>
-                            </div>
-                        </div>
+                        {errorInfo?.error && (
+                            <p className='input_errormsg'>{errorInfo.error}</p>
+                        )}
+                        <button
+                            onClick={handleTestLogin}
+                            className="login_btn btn btn_primary w-100"
+                        >
+                            Test login
+                        </button>
                         <button
                             className="login_btn btn btn_primary w-100"
-                            onClick={handleLogin}
-                            disabled={loading}
                         >Login</button>
-                        <p className="login_new_acc text_center m-1">Create New Account </p>
+                        <p className="login_new_acc text_center m-1"><Link to='/signup'>Create New Account </Link></p>
                     </div>
                 </div>
-            </section>
-        </>
+            </form>
+        </section>
     )
 }
 
