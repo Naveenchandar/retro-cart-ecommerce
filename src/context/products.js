@@ -51,4 +51,4 @@ const ProductsProvider = ({ children }) => {
 
 const useProducts = () => useContext(ProductsContext);
 
-export { useProducts, ProductsProvider };
+export { useProducts, ProductsProvider }; 

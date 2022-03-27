@@ -1,7 +1,7 @@
 import React from 'react'
-import { Oval } from 'react-loader-spinner';
 import './index.css';
-import { ProductCard, ProductFilter } from '../../components';
+import { Oval } from 'react-loader-spinner';
+import { ProductFilter, ProductCard } from '../../components';
 import { useProducts } from '../../context';
 import { LoadProducts } from './loadProducts';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';

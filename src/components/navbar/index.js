@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context';
+import { useAuth } from '../../context/AuthContext';
 import './index.css';
+import { useCart, useWishlist } from '../../context';
 
 function NavBar() {
     const { user, updateUser } = useAuth();
@@ -11,6 +12,8 @@ function NavBar() {
         navigate('/login');
         localStorage.removeItem('retro-token');
     }
+    const { addedToWishList } = useWishlist();
+    const { cartItems } = useCart();
     return (
         <section id="navbar">
             <div className="nav_group">
@@ -21,20 +24,20 @@ function NavBar() {
                         </Link>
                     </div>
                     <div className="nav_actions flex_row">
-                        <a href="../wishlist/wishlist.html" className="badge_container" title="Wishlist"
+                        <Link to="/wishlist" className="badge_container" title="Wishlist"
                             aria-label="Wishlist">
                             <i className="fa fa-heart-o"></i>
                             <span className="badge badge_number">
-                                <span>0</span>
+                                <span>{addedToWishList.length}</span>
                             </span>
-                        </a>
-                        <a href="../cart-management/cart-management.html" className="badge_container" title="Cart Management"
+                        </Link>
+                        <Link to="/cart" className="badge_container" title="Cart Management"
                             aria-label="Cart Management">
                             <i className='fa fa-shopping-cart'></i>
                             <span className="badge badge_number">
-                                <span>0</span>
+                                <span>{cartItems.length}</span>
                             </span>
-                        </a>
+                        </Link>
                         {user?.email ?
                             <button className="btn auth_btn" onClick={handleLogout}>Logout</button>
                             :

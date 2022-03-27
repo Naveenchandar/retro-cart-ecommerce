@@ -1,12 +1,29 @@
 import React from 'react';
+import { useCart, useWishlist } from '../../context';
 
 export function ProductCard({ product }) {
-    const { image, alt, productName, discount, price, oldPrice, rating } = product;
+    const { image, alt, productName, discount, price, oldPrice, rating, id } = product;
+
+    const { addToWishlist, addedToWishList } = useWishlist();
+
+    const { cartItems, addToCart, removeFromCart } = useCart();
+
     return (
         <div className="ecommerce_card flex_column product_item">
             <div className="product_image w-100 my-1">
                 <img src={image} className="w-100 block m_auto" alt={alt} />
-                <i className="fa fa-heart-o product_wishlist pointer"></i>
+                {addedToWishList.find(item => item.id === id) ?
+                    <i
+                        className='fa fa-heart product_wishlist pointer'
+                        style={{ color: 'red' }}
+                        onClick={() => addToWishlist(product, 'remove')}
+                    ></i>
+                    :
+                    <i
+                        className='fa fa-heart-o product_wishlist pointer'
+                        onClick={() => addToWishlist(product)}
+                    ></i>
+                }
             </div>
             <div className="product_details flex flex_dcolumn w-100">
                 <h5 className="flex justify_spacebtw">
@@ -24,11 +41,16 @@ export function ProductCard({ product }) {
                     &ensp;
                     <span className="product_original_price">Rs. {oldPrice}</span>
                 </div>
-                <button className="product_add_cart btn btn_primary p-2">
-                    <a href="../cart-management/cart-management.html">
+                {cartItems.find(item => item.id === id) ?
+
+                    <button className="product_remove_cart btn btn_primary p-2" onClick={() => removeFromCart(id)}>
+                        Remove from cart
+                    </button>
+                    :
+                    <button className="product_add_cart btn btn_primary p-2" onClick={() => addToCart(product)}>
                         Add to cart
-                    </a>
-                </button>
+                    </button>
+                }
             </div>
         </div>
     )
