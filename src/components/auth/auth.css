@@ -44,3 +44,7 @@ body {
     top: 25%;
     right: 2%
 }
+
+.input_errormsg {
+    color: var(--red);
+}

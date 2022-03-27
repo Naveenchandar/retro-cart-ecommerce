@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Login from '../../components/auth/login';
+import { useAuth } from '../../context/AuthContext';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 
 export const LoginPage = () => {
@@ -8,25 +10,62 @@ export const LoginPage = () => {
         email: '', password: ''
     });
     const [errorInfo, setErrorInfo] = useState({
-        email: '', password: ''
+        email: '', password: '', error: ''
     });
-    const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+
+    const { updateUser } = useAuth();
+
+    const navigate = useNavigate();
 
     useDocumentTitle('Retro Cart | Login');
 
+
     const handleInputChange = (targetValue, type) => {
-        setUserInfo({ ...info, [type]: targetValue })
+        if (type === 'email') {
+            setErrorInfo({ ...errorInfo, email: '', error: '' });
+        }
+        if (type === 'password') {
+            setErrorInfo({ ...errorInfo, password: '', error: '' });
+        }
+        setUserInfo({ ...info, [type]: targetValue });
+    }
+
+    const handleValidation = () => {
+        const { email, password } = info;
+        if (!email && !password) {
+            setErrorInfo({ ...errorInfo, email: 'Please enter email id', password: 'Please enter password' });
+            return false;
+        }
+        if (!email) {
+            setErrorInfo({ ...errorInfo, email: 'Please enter email id' });
+            return false;
+        }
+        if (!password) {
+            setErrorInfo({ ...errorInfo, password: 'Please enter password' });
+            return false;
+        }
+        return true;
     }
 
     const handleLogin = async (event) => {
         event.preventDefault();
         try {
-            setLoading(false);
-            await axios.post("/api/auth/login", { info })
-            setLoading(false);
+            if (handleValidation()) {
+                const { status, data: { foundUser }, encodedToken } = await axios.post("/api/auth/login", info)
+                if (status === 200 && foundUser?.id && encodedToken) {
+                    updateUser(info);
+                    localStorage.setItem("retro-token", encodedToken);
+                    navigate('/');
+                } else {
+                    throw new Error('Email or Password is incorrect');
+                }
+            } else {
+                throw new Error('Email or Password is incorrect');
+            }
 
         } catch (error) {
-            setErrorInfo(error.message)
+            setErrorInfo({ error: 'Email or Password is incorrect' });
         }
     }
     return (
@@ -35,7 +74,19 @@ export const LoginPage = () => {
             handleLogin={handleLogin}
             info={info}
             errorInfo={errorInfo}
-            loading={loading}
+            togglePassword={() => setShowPassword((showPassword) => !showPassword)}
+            showPassword={showPassword}
+            handleTestLogin={() => {
+                setUserInfo({
+                    email: "adarshbalika@gmail.com",
+                    password: "adarshbalika",
+                });
+                updateUser({
+                    email: "adarshbalika@gmail.com",
+                    password: "adarshbalika",
+                })
+                navigate('/')
+            }}
         />
     )
 }

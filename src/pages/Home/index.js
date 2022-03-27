@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import NavBar from '../../components/navbar';
 import './index.css';
 import FreeShippingIcon from '../../assets/images/free.svg';
 import DeliveryIcon from '../../assets/images/delivery.svg';
