@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Login from '../../components/auth/login';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 
 export const LoginPage = () => {

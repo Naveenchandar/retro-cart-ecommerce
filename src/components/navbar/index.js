@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context';
 import './index.css';
 
 function NavBar() {
@@ -20,9 +20,6 @@ function NavBar() {
                             Retro Cart
                         </Link>
                     </div>
-                    {/* <div className="nav_search flex align_center justify_center">
-                        <input type="search" placeholder="Search Products" className="input" aria-label="Search Products" />
-                    </div> */}
                     <div className="nav_actions flex_row">
                         <a href="../wishlist/wishlist.html" className="badge_container" title="Wishlist"
                             aria-label="Wishlist">
