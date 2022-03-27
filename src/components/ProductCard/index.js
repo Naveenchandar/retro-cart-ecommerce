@@ -1,6 +1,6 @@
 import React from 'react';
 
-function ProductCard({ product }) {
+export function ProductCard({ product }) {
     const { image, alt, productName, discount, price, oldPrice, rating } = product;
     return (
         <div className="ecommerce_card flex_column product_item">
@@ -33,5 +33,3 @@ function ProductCard({ product }) {
         </div>
     )
 }
-
-export default ProductCard

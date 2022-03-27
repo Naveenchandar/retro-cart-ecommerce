@@ -4,9 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import { makeServer } from "./server";
-import { ProductFilterProvider } from "./context/productFilter";
-import { ProductsProvider } from "./context/products";
-import { AuthContextProvider } from "./context/AuthContext";
+import { AuthContextProvider, ProductsProvider, ProductFilterProvider } from "./context";
 
 // Call make Server
 makeServer();
