@@ -14,6 +14,7 @@ const LoadProducts = (productsList) => {
         if (isCategoriesSelected) return productsList;
         for (const value in categoryName) {
             const isCategoryChecked = categoryName[value];
+            // eslint-disable-next-line no-loop-func
             const productsWithCategory = productsList.filter(({ id, type }) => {
                 const isProductsAvailable = filteredProducts.find(item => item.id === id)
                 return isCategoryChecked && !isProductsAvailable ? type.includes(value) : false

@@ -9,7 +9,7 @@ function WishList() {
         <section className="wishlist_main p-4 flex_row justify_even">
             {addedToWishList.length > 0 ?
                 addedToWishList.map(product => {
-                    const { image, alt, productName, price, oldPrice, id, rating, discount, quantity = 1 } = product;
+                    const { image, productName, price, oldPrice, id, rating, discount, quantity = 1 } = product;
                     return (
                         <div className="ecommerce_card wishlist_card flex_column" key={id}>
                             <div className="product_image w-100">
