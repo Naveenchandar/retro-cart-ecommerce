@@ -19,11 +19,11 @@ export function ProductFilter() {
     return (
         <section className="filter_products">
             <div className="p-2 flex align_center justify_spacebtw">
-                <h5 className="font_bold">Filter</h5>
+                <h5 className="font_bold filter_title">Filter</h5>
                 <button onClick={() => dispatch({filterType: 'CLEAR_FILTERS'})}>Clear</button>
             </div>
             <div className="p-2">
-                <h5 className="font_bold">Price - {price}</h5>
+                <h5 className="font_bold filter_title py-1">Price - {price}</h5>
                 <input type="range" min="100" max="1000" step="50" className='w_100' onChange={(event) => dispatch({
                     type: 'FILTER_BY_PRICE',
                     payload: parseInt(event.target.value)
@@ -38,7 +38,7 @@ export function ProductFilter() {
                 </div>
             </div>
             <div className="p-2">
-                <h5 className="font_bold">Categories</h5>
+                <h5 className="font_bold filter_title py-1">Categories</h5>
                 <ul>
                     {categoriesList?.map(({ id, categoryName }) => {
                         return (
@@ -59,7 +59,7 @@ export function ProductFilter() {
                 </ul>
             </div>
             <div className="p-2">
-                <h5 className="font_bold">Rating</h5>
+                <h5 className="font_bold filter_title py-1">Rating</h5>
                 <ul>
                     {ratingsList?.map(item => {
                         return (
@@ -82,7 +82,7 @@ export function ProductFilter() {
                 </ul>
             </div>
             <div className="p-2">
-                <h5 className="font_bold">Sort by</h5>
+                <h5 className="font_bold filter_title py-1">Sort by</h5>
                 <ul>
                     {sortPrice?.map(item => {
                         return (

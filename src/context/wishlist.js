@@ -4,6 +4,7 @@ const WishListContext = createContext([]);
 
 const WishListProvider = ({ children }) => {
     const [addedToWishList, setAddedToWishList] = useState([]);
+
     const addToWishlist = (product, type) => {
         const { image, productName, discount, price, oldPrice, rating, id } = product;
         if (type === 'remove') {
@@ -18,6 +19,7 @@ const WishListProvider = ({ children }) => {
               ])
         }
     }
+    
     return (
         <WishListContext.Provider value={{ addedToWishList, addToWishlist }}>
             {children}

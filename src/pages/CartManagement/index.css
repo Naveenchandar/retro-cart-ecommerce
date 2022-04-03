@@ -47,6 +47,21 @@
     height: 30rem
 }
 
+.product_name, .total_amt {
+    font-size: 1.6rem;
+}
+
+.total_amt {
+    border-top: 1px solid;
+    padding-top: 8px;
+}
+
+.price_splitup {
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+}
+
 @media screen and (max-width:48em) {
     #cart_main {
         grid-template-columns: 1fr

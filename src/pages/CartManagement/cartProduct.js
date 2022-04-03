@@ -6,13 +6,13 @@ function CartProduct({ product: { id, image, productName, price, oldPrice, disco
         <section className="cart_list my-2" key={id}>
             <div className="cart_item border flex_row cart_gap justify_spacebtw">
                 <div className="cart_image">
-                    <img src="https://retro-cart.netlify.app/assets/image_1.png" alt="Clothes" className="block w-100 m_auto" />
+                    <img src={image} alt="Clothes" className="block w-100 m_auto" />
                 </div>
                 <div className="flex_column align_start cart_item_info cart_gap">
-                    <h5>{productName}</h5>
+                    <h5 className='product_name'>{productName}</h5>
                     <div className="product_price">
-                        <span className="product_discount_price">{price}</span>
-                        <span className="product_original_price">{oldPrice}</span>
+                        <span className="product_discount_price"><i className='fa fa-rupee'></i>&nbsp;{price}</span>&nbsp;
+                        <span className="product_original_price"><i className='fa fa-rupee'></i>&nbsp;{oldPrice}</span>
                     </div>
                     <p className="cart_offer font_bold">{discount}% Off</p>
                     <div className="flex align_center cart_quantity cart_gap">

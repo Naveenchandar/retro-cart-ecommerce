@@ -33,7 +33,7 @@ function Products() {
         }
         return (
             <>
-                <h5 className="font_bold my-1 px-4">showing {productsList.length} Products</h5>
+                <h5 className="font_bold my-1 px-4 py-1 show_product_title">showing {productsList.length} Products</h5>
                 <section className="p-4 flex_row justify_start product_item_group">
                     {productsList.map(product => {
                         return (
