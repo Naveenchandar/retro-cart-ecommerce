@@ -13,6 +13,7 @@ function NavRoutes() {
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="products" element={<Products />} />
+            <Route path="product/:productName" element={<Products />} />
             <Route path="wishlist" element={<WishList />} />
             <Route path="cart" element={<CartManagement />} />
             <Route path="login" element={<LoginPage />} />
