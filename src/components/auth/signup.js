@@ -6,11 +6,13 @@ import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 
 function SignUp() {
     const [info, setUserInfo] = useState({
-        email: '', password: ''
+        email: '', password: '', firstName: '', lastName: '', confirmPwd: ''
     });
-    const [errorInfo, setErrorInfo] = useState('');
+    const [errorInfo, setErrorInfo] = useState({
+        email: '', password: '', firstName: '', lastName: '', confirmPwd: ''
+    });
 
-    const [showPassword, setShowPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState({ pwd: false, confirmPwd: false });
 
     const navigate = useNavigate();
 
@@ -18,8 +20,12 @@ function SignUp() {
 
     useDocumentTitle('Retro Cart | Sign up');
 
-    const togglePassword = () => {
-        setShowPassword((showPassword) => !showPassword)
+    const togglePassword = (type) => {
+        if (type === 'pwd') {
+            setShowPassword({ ...showPassword, pwd: !showPassword.pwd });
+        } else {
+            setShowPassword({ ...showPassword, confirmPwd: !showPassword.confirmPwd });
+        }
     }
 
     const handleInputChange = (targetValue, type) => {
@@ -28,17 +34,29 @@ function SignUp() {
     }
 
     const handleValidation = () => {
-        const { email, password } = info;
-        if (!email && !password) {
-            setErrorInfo({ ...errorInfo, email: 'Please enter email id', password: 'Please enter password' });
-            return false;
-        }
+        const { email, password, firstName, lastName, confirmPwd } = info;
         if (!email) {
             setErrorInfo({ ...errorInfo, email: 'Please enter email id' });
             return false;
         }
         if (!password) {
             setErrorInfo({ ...errorInfo, password: 'Please enter password' });
+            return false;
+        }
+        if (!firstName) {
+            setErrorInfo({ ...errorInfo, firstName: 'Please enter first name' });
+            return false;
+        }
+        if (!lastName) {
+            setErrorInfo({ ...errorInfo, lastName: 'Please enter last nmae' });
+            return false;
+        }
+        if (!confirmPwd) {
+            setErrorInfo({ ...errorInfo, confirmPwd: 'Please enter confirm password' });
+            return false;
+        }
+        if (password && confirmPwd && password !== confirmPwd) {
+            setErrorInfo({ ...errorInfo, confirmPwd: 'Password mismatch', error: '' });
             return false;
         }
         return true;
@@ -56,12 +74,9 @@ function SignUp() {
                 } else {
                     throw new Error('Email or Password is incorrect');
                 }
-            } else {
-                throw new Error('Email or Password is incorrect');
             }
-
         } catch (error) {
-            setErrorInfo({ error: 'Email or Password is incorrect' });
+            setErrorInfo({ error: 'Something went wrong, Please try again.' });
         }
     }
 
@@ -82,8 +97,38 @@ function SignUp() {
                                     className="input w-100"
                                     onChange={(e) => handleInputChange(e.target.value, 'email')}
                                     value={info?.email}
+                                    required
                                 />
                             </div>
+                            {errorInfo.email && <p className='input_errormsg'>{errorInfo.email}</p>}
+                        </div>
+                        <div className="login_password py-1">
+                            <div className="input_group flex align_start flex_dcolumn">
+                                <label>First name</label>
+                                <input
+                                    type="text"
+                                    placeholder="first name"
+                                    className="input w-100"
+                                    onChange={(e) => handleInputChange(e.target.value, 'firstName')}
+                                    value={info?.firstName}
+                                    required
+                                />
+                            </div>
+                            {errorInfo.firstName && <p className='input_errormsg'>{errorInfo.firstName}</p>}
+                        </div>
+                        <div className="login_password py-1">
+                            <div className="input_group flex align_start flex_dcolumn">
+                                <label>Last name</label>
+                                <input
+                                    type="text"
+                                    placeholder="last name"
+                                    className="input w-100"
+                                    onChange={(e) => handleInputChange(e.target.value, 'lastName')}
+                                    value={info?.lastName}
+                                    required
+                                />
+                            </div>
+                            {errorInfo.lastName && <p className='input_errormsg'>{errorInfo.lastName}</p>}
                         </div>
                         <div className="login_password py-1">
                             <div className="input_group flex align_start flex_dcolumn">
@@ -91,17 +136,39 @@ function SignUp() {
                                 <div className="input_password">
                                     <span>
                                         <input
-                                            type={showPassword ? "text" : "password"}
+                                            type={showPassword.pwd ? "text" : "password"}
                                             placeholder="**********"
                                             className="input"
                                             onChange={(e) => handleInputChange(e.target.value, 'password')}
                                             value={info?.password}
+                                            required
                                         />
-                                        <i className={showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'} onClick={togglePassword}></i>
+                                        <i className={showPassword.pwd ? 'fa fa-eye' : 'fa fa-eye-slash'} onClick={() => togglePassword('pwd')}></i>
                                     </span>
                                 </div>
                             </div>
+                            {errorInfo.password && <p className='input_errormsg'>{errorInfo.password}</p>}
                         </div>
+                        <div className="login_password py-1">
+                            <div className="input_group flex align_start flex_dcolumn">
+                                <label>Confirm Password</label>
+                                <div className="input_password">
+                                    <span>
+                                        <input
+                                            type={showPassword.confirmPwd ? "text" : "password"}
+                                            placeholder="**********"
+                                            className="input"
+                                            onChange={(e) => handleInputChange(e.target.value, 'confirmPwd')}
+                                            value={info?.confirmPwd}
+                                            required
+                                        />
+                                        <i className={showPassword.confirmPwd ? 'fa fa-eye' : 'fa fa-eye-slash'} onClick={() => togglePassword('cpwd')}></i>
+                                    </span>
+                                </div>
+                            </div>
+                            {errorInfo.confirmPwd && <p className='input_errormsg py-1'>{errorInfo.confirmPwd}</p>}
+                        </div>
+                        {errorInfo.error && <p className='input_errormsg py-1'>{errorInfo.error}</p>}
                         <button className="login_btn btn btn_primary w-100">Sign up</button>
                         <p className="login_new_acc text_center m-1"><Link to='/login'>Login </Link></p>
                     </div>
