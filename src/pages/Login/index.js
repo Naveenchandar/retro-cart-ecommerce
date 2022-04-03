@@ -38,11 +38,11 @@ export const LoginPage = () => {
             return false;
         }
         if (!email) {
-            setErrorInfo({ ...errorInfo, email: 'Please enter email id' });
+            setErrorInfo({ ...errorInfo, email: 'Please enter email id', error: '' });
             return false;
         }
         if (!password) {
-            setErrorInfo({ ...errorInfo, password: 'Please enter password' });
+            setErrorInfo({ ...errorInfo, password: 'Please enter password', error: '' });
             return false;
         }
         return true;
@@ -60,10 +60,7 @@ export const LoginPage = () => {
                 } else {
                     throw new Error('Email or Password is incorrect');
                 }
-            } else {
-                throw new Error('Email or Password is incorrect');
             }
-
         } catch (error) {
             setErrorInfo({ error: 'Email or Password is incorrect' });
         }
