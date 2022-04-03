@@ -3,17 +3,22 @@ import { Routes, Route } from "react-router-dom";
 import { LoginPage } from '../../pages';
 import SignUp from '../auth/signup';
 import Mockman from "mockman-js";
-import Products from '../../pages/Products';
 import Home from '../../pages/Home';
+import Products from '../../pages/Products';
+import WishList from '../../pages/Wishlist';
+import CartManagement from '../../pages/CartManagement';
 
 function NavRoutes() {
     return (
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="products" element={<Products />} />
+            <Route path="wishlist" element={<WishList />} />
+            <Route path="cart" element={<CartManagement />} />
+            <Route path="login" element={<LoginPage />} />
             <Route path="signup" element={<SignUp />} />
             <Route path="login" element={<LoginPage />} />
-            <Route path="mock" element={<Mockman />} />
+            <Route path="/mock" element={<Mockman />} />
         </Routes>
     )
 }

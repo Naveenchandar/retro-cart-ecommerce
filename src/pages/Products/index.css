@@ -56,6 +56,13 @@ body {
 
 .product_add_cart {
     background-color: var(--primary-color);
+}
+
+.product_remove_cart {
+    background-color: var(--black);
+}
+
+.product_add_cart, .product_remove_cart {
     border-radius: .5rem
 }
 

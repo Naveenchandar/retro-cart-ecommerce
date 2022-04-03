@@ -18,7 +18,8 @@ export const products = [
     oldPrice: "1600.00",
     inStock: true,
     discount: Math.floor(Math.random() * 100),
-    rating: '3.5'
+    rating: '3.5',
+    quantity: 1
   },
   {
     _id: uuid(),
@@ -32,7 +33,8 @@ export const products = [
     oldPrice: "600.00",
     inStock: true,
     discount: Math.floor(Math.random() * 100),
-    rating: 4
+    rating: 4,
+    quantity: 1
   },
   {
     _id: uuid(),
@@ -46,7 +48,8 @@ export const products = [
     oldPrice: "1000.00",
     inStock: true,
     discount: Math.floor(Math.random() * 100),
-    rating: 4
+    rating: 4,
+    quantity: 1
   },
   {
     _id: uuid(),
@@ -60,7 +63,8 @@ export const products = [
     oldPrice: "900.00",
     inStock: true,
     discount: Math.floor(Math.random() * 100),
-    rating: 3
+    rating: 3,
+    quantity: 1
   },
   {
     _id: uuid(),
@@ -74,6 +78,7 @@ export const products = [
     oldPrice: "300.00",
     inStock: true,
     discount: Math.floor(Math.random() * 100),
-    rating: 2
+    rating: 2,
+    quantity: 1
   }
 ];
