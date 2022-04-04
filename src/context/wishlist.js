@@ -1,9 +1,21 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 const WishListContext = createContext([]);
 
+function fetchWishListItems() {
+    const wishlistitems = localStorage.getItem("retro-wishlist");
+    if (JSON.parse(wishlistitems)?.length) {
+        return JSON.parse(wishlistitems);
+    }
+    return [];
+}
+
 const WishListProvider = ({ children }) => {
-    const [addedToWishList, setAddedToWishList] = useState([]);
+    const [addedToWishList, setAddedToWishList] = useState(fetchWishListItems());
+
+    useEffect(() => {
+        localStorage.setItem("retro-wishlist", JSON.stringify(addedToWishList));
+      }, [addedToWishList]);
 
     const addToWishlist = (product, type) => {
         const { image, productName, discount, price, oldPrice, rating, id } = product;
@@ -11,15 +23,16 @@ const WishListProvider = ({ children }) => {
             const removeFromWishList = addedToWishList.filter(item => item.id !== id);
             setAddedToWishList(removeFromWishList);
         } else {
-            setAddedToWishList([
+            const wishListItemsAdd = [
                 ...addedToWishList,
                 {
-                  id, image, productName, price, oldPrice, rating, discount
+                    id, image, productName, price, oldPrice, rating, discount
                 }
-              ])
+            ]
+            setAddedToWishList(wishListItemsAdd);
         }
     }
-    
+
     return (
         <WishListContext.Provider value={{ addedToWishList, addToWishlist }}>
             {children}
