@@ -12,8 +12,7 @@ export function ProductFilter() {
         { id: uuid(), categoryName: "Men's t-shirt" },
         { id: uuid(), categoryName: "Women's shirt" },
         { id: uuid(), categoryName: "Women's t-shirt" },
-        { id: uuid(), categoryName: "Kids" },
-        { id: uuid(), categoryName: "Accessories" }
+        { id: uuid(), categoryName: "Kids" }
     ];
 
     return (

@@ -14,7 +14,6 @@ const initialFilterState = {
         "Women's shirt": false,
         "Women's t-shirt": false,
         "Kids": false,
-        "Accessories": false,
     },
     ratings: 0,
     price: 100,

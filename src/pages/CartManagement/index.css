@@ -10,8 +10,8 @@
 
 .cart_image img {
     height: 16rem;
-    max-inline-size: fit-content;
-    block-size: inherit
+    /* max-inline-size: fit-content;
+    block-size: inherit */
 }
 
 .cart_item {
