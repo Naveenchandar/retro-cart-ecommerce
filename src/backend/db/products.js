@@ -108,7 +108,7 @@ export const products = [
     oldPrice: "300.00",
     inStock: true,
     discount: Math.floor(Math.random() * 100),
-    rating: 2,
+    rating: 4,
     quantity: 1
   },
   {
@@ -119,11 +119,11 @@ export const products = [
     alt: "Roadster shirt",
     image: "https://images.meesho.com/images/products/76063243/p6p0t_512.jpg",
     description: "Full hand shirt",
-    price: "100.00",
-    oldPrice: "300.00",
+    price: "500.00",
+    oldPrice: "900.00",
     inStock: true,
     discount: Math.floor(Math.random() * 100),
-    rating: 2,
+    rating: 3.5,
     quantity: 1
   },
   {
@@ -134,11 +134,41 @@ export const products = [
     alt: "Roadster shirt",
     image: "https://images.meesho.com/images/products/13679817/c65fe_512.jpg",
     description: "Full hand shirt",
-    price: "100.00",
-    oldPrice: "300.00",
+    price: "450.00",
+    oldPrice: "1000.00",
     inStock: true,
     discount: Math.floor(Math.random() * 100),
-    rating: 2,
+    rating: 3,
+    quantity: 1
+  },
+  {
+    _id: uuid(),
+    addedInYear: new Date().getFullYear(),
+    type: "Kids",
+    productName: "Roadster",
+    alt: "Roadster shirt",
+    image: "https://cdn.shopify.com/s/files/1/0584/2770/3448/collections/Catlog-Girls-Kids-wear.jpg?v=1637756504",
+    description: "Full hand shirt",
+    price: "400.00",
+    oldPrice: "800.00",
+    inStock: true,
+    discount: Math.floor(Math.random() * 100),
+    rating: 2.5,
+    quantity: 1
+  },
+  {
+    _id: uuid(),
+    addedInYear: new Date().getFullYear(),
+    type: "Kids",
+    productName: "Roadster",
+    alt: "Roadster shirt",
+    image: "https://s3.r29static.com/bin/entry/2d7/0,200,2000,2000/x/1636107/image.png",
+    description: "Full hand shirt",
+    price: "350.00",
+    oldPrice: "700.00",
+    inStock: true,
+    discount: Math.floor(Math.random() * 100),
+    rating: 3.5,
     quantity: 1
   }
 ];
