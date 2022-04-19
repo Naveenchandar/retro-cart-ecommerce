@@ -7,18 +7,28 @@ import Home from '../../pages/Home';
 import Products from '../../pages/Products';
 import WishList from '../../pages/Wishlist';
 import CartManagement from '../../pages/CartManagement';
+import PrivateRoutes from './PrivateRoutes';
 
 function NavRoutes() {
     return (
         <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="products" element={<Products />} />
-            <Route path="product/:productName" element={<Products />} />
-            <Route path="wishlist" element={<WishList />} />
-            <Route path="cart" element={<CartManagement />} />
-            <Route path="login" element={<LoginPage />} />
-            <Route path="signup" element={<SignUp />} />
-            <Route path="login" element={<LoginPage />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/product/:productName" element={<Products />} />
+            <Route path="/wishlist" element={
+                <PrivateRoutes>
+                    <WishList />
+                </PrivateRoutes>
+            }
+            />
+            <Route path="/cart" element={
+                <PrivateRoutes>
+                    <CartManagement />
+                </PrivateRoutes>
+            }
+            />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignUp />} />
             <Route path="/mock" element={<Mockman />} />
         </Routes>
     )

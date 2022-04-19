@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Login from '../../components/auth/login';
 import { useAuth } from '../../context';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
@@ -17,6 +17,8 @@ export const LoginPage = () => {
     const { updateUser } = useAuth();
 
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "";
 
     useDocumentTitle('Retro Cart | Login');
 
@@ -52,11 +54,11 @@ export const LoginPage = () => {
         event.preventDefault();
         try {
             if (handleValidation()) {
-                const { status, data: { foundUser }, encodedToken } = await axios.post("/api/auth/login", info)
-                if (status === 200 && foundUser?.id && encodedToken) {
+                const { status, data: { encodedToken } } = await axios.post("/api/auth/login", info)
+                if (status === 200 && encodedToken) {
                     updateUser(info);
                     localStorage.setItem("retro-token", encodedToken);
-                    navigate('/');
+                    navigate(from, { replace: true });
                 } else {
                     throw new Error('Email or Password is incorrect');
                 }
@@ -82,7 +84,7 @@ export const LoginPage = () => {
                     email: "adarshbalika@gmail.com",
                     password: "adarshbalika",
                 })
-                navigate('/')
+                navigate(from, { replace: true });
             }}
         />
     )
