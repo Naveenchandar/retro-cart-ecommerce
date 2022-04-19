@@ -8,6 +8,7 @@ import axios from 'axios';
 import Categories from '../../components/categories';
 import Footer from '../../components/footer';
 import NewArrivals from './NewArrivals';
+import { Link } from 'react-router-dom';
 
 function Home() {
     const [categories, setCategories] = useState([]);
@@ -42,10 +43,9 @@ function Home() {
                                         </span> <br /> On Everything
                                     </h1>
                                     <div className="btn_box">
-                                        <a href="./components/product-list/product-list.html"
-                                            className="btn1 cta_product py-1 px-2 transition_3_ease rounded_sm text_center">
+                                        <Link to='/products' className="btn1 cta_product py-1 px-2 transition_3_ease rounded_sm text_center">
                                             Shop Now
-                                        </a>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
