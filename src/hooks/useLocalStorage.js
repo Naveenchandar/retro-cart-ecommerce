@@ -7,7 +7,7 @@ export const useGetLocalStorage = () => {
                 if (token) {
                     return jwt_decode(window.localStorage.getItem(key));
                 }
-                return JSON.parse(window.localStorage.getItem);
+                return JSON.parse(window.localStorage.getItem(key));
             }
         } catch (error) {
             console.error('useGetLocalStorage:', error)

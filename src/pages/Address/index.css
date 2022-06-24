@@ -1,0 +1,111 @@
+.address_form {
+    border-radius: 1rem;
+    display: flex;
+    margin: 1.29rem auto;
+    max-width: 80rem;
+    padding: 1rem;
+    place-items: center;
+}
+
+.address_form .input_group {
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 0 2rem;
+    transition: 0.5s;
+}
+
+.address_textarea {
+    align-self: baseline;
+    width: 98%;
+}
+
+.address_form .address_input_fields {
+    flex-wrap: wrap;
+    place-items: center;
+}
+
+.address_input_fields label {
+    display: block;
+    font-size: 1.4rem;
+    margin: 0.5rem;
+    width: 48%;
+}
+
+.address_input_fields label>input {
+    background: transparent;
+    border: 1px solid var(--gray);
+    border-radius: 0.2rem;
+    color: var(--black);
+    font-size: 1.3rem;
+    margin: 5px;
+    padding: 0.5rem;
+    width: 100%;
+    margin-left: 0;
+    height: 4rem;
+    border-radius: 4px;
+}
+
+.address_input_fields label:not(:nth-child(5))::before,
+.address_textarea label::before {
+    color: var(--red);
+    content: "*";
+}
+
+.address_textarea textarea {
+    height: 6rem;
+    padding: 1rem;
+    width: 100%;
+    font-size: 1.4rem;
+}
+
+.address_list {
+    margin: 2rem auto;
+    padding: 2rem;
+    width: 80%;
+    flex-wrap: wrap;
+}
+
+.address_list_item {
+    margin: 2rem;
+    padding: 2rem;
+    width: 35rem;
+}
+
+.address_list_item > :not(:nth-last-child()) {
+    padding: 0.5rem 0;
+}
+
+.address_list_item {
+    line-height: 2rem;
+}
+
+.address_list_item h4 {
+    justify-content: space-between;
+}
+.address_list_item h4 > span{
+    width: 20rem;
+    min-width: 20rem;
+    max-width: 20rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.address_list_item > * {
+    padding-block-start: 1rem;
+}
+
+.address_section {
+    margin: 2rem 0;
+}
+.address_section > * {
+    margin: 1rem 0;
+}
+
+.address_icons > svg {
+    font-size: 1.4rem;
+}
+
+.address_icons > svg:hover {
+    color: var(--primary-color);
+}
