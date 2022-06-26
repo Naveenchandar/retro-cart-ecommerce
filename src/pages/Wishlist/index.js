@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useCart, useWishlist } from '../../context';
 import './index.css';
 
@@ -40,7 +41,7 @@ function WishList() {
                     )
                 }) : (
                     <>
-                        <h4>No wish list items found.</h4>
+                        <h4>No wish list items found :(. <Link to="/products" className='shop_link'>Start shopping</Link></h4>
                     </>
                 )
             }

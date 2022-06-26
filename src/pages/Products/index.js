@@ -12,7 +12,7 @@ function Products() {
     const { productState: { products, loading, error } } = useProducts();
     const productsList = LoadProducts(products);
 
-    useDocumentTitle('Retor Cart | Products');
+    useDocumentTitle('Retro Cart | Products');
 
     const renderProducts = () => {
         if (error) {

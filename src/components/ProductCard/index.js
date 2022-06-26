@@ -2,11 +2,11 @@ import React from 'react';
 import { useCart, useWishlist } from '../../context';
 
 export function ProductCard({ product }) {
-    const { image, alt, productName, discount, price, oldPrice, rating, id } = product;
+    const { image, alt, productName, discount, price, oldPrice, rating, id, quantity } = product;
 
     const { addToWishlist, addedToWishList } = useWishlist();
 
-    const { cartItems, addToCart, removeFromCart } = useCart();
+    const { cartItems, addToCart, removeFromCart, quantityRemove, quantityAdd } = useCart();
 
     return (
         <div className="ecommerce_card flex_column product_item">
@@ -42,10 +42,18 @@ export function ProductCard({ product }) {
                     <span className="product_original_price">Rs. {oldPrice}</span>
                 </div>
                 {cartItems.find(item => item.id === id) ?
-
-                    <button className="product_remove_cart btn btn_primary p-2" onClick={() => removeFromCart(id)}>
-                        Remove from cart
-                    </button>
+                    <div className='flex'>
+                        <button className="product_remove_cart btn btn_primary p-2" onClick={() => removeFromCart(id)}>
+                            Remove from cart
+                        </button>
+                        <div className="flex align_center cart_quantity cart_gap">
+                            <div className="flex align_center cart_count cart_gap">
+                                <i className='fa fa-minus-circle pointer' onClick={() => quantityRemove(id, price, quantity)}></i>
+                                <span>{quantity}</span>
+                                <i className='fa fa-plus-circle pointer' onClick={() => quantityAdd(id, price, 1)}></i>
+                            </div>
+                        </div>
+                    </div>
                     :
                     <button className="product_add_cart btn btn_primary p-2" onClick={() => addToCart(product)}>
                         Add to cart
