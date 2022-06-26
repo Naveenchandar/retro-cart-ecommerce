@@ -3,7 +3,7 @@ import "./App.css";
 import NavBar from "./components/navbar";
 import NavRoutes from "./components/Routes";
 
-function App() {
+export const App = () => {
   return (
     <div>
       <Toaster position="top-right" toastOptions={{
@@ -14,5 +14,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
