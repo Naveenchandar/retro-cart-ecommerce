@@ -60,6 +60,24 @@
     transform: translateY(0%);
 }
 
+.logout_btn {
+    color: var(--white);
+    background-color: var(--primary-color);
+    padding: 1rem;
+    border-radius: 4px;
+    right: 0;
+    top: 6rem;
+    z-index: 2;
+}
+
+.username {
+    color: var(--white);
+}
+
+.logout_btn:hover {
+    color: var(--black);
+}
+
 @media screen and (max-width:67.5em) {
     .nav_search {
         display: none
