@@ -1,7 +1,6 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
 
-function Categories({ categories }) {
+export const Categories = ({ categories }) => {
     return (
         categories.map(({ id, categoryName, image }) => {
             return (
@@ -29,5 +28,3 @@ function Categories({ categories }) {
         })
     )
 }
-
-export default Categories

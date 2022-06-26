@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { PasswordInput, TextInput } from './input';
 
-function SignUp() {
+export const SignUp = () => {
     const [info, setUserInfo] = useState({
         email: '', password: '', firstName: '', lastName: '', confirmPwd: ''
     });
@@ -142,5 +142,3 @@ function SignUp() {
         </section>
     )
 }
-
-export default SignUp

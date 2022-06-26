@@ -17,7 +17,7 @@ export const useGetLocalStorage = () => {
     return getValue;
 }
 
-export function useSetLocalStorage() {
+export const useSetLocalStorage = () => {
     const setValue = (key, value, token) => {
         try {
             if (typeof window !== "undefined") {

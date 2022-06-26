@@ -1,5 +1,3 @@
-import React from 'react'
-
 export const PasswordInput = ({ type, handleInputChange, togglePassword, errorInfo, showPassword, data }) => {
     const { value, label, inputType } = data;
     return (

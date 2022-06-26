@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { v4 as uuid } from "uuid";
 
-function AddressForm({ addAddress, edit }) {
+export const AddressForm = ({ addAddress, edit }) => {
     const [address, setAddress] = useState({
         name: '', phoneNum: '', country: '', state: '', landmark: '', pincode: '', fullAddress: ''
     });
@@ -170,5 +170,3 @@ function AddressForm({ addAddress, edit }) {
         </section>
     )
 }
-
-export default AddressForm

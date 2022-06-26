@@ -1,9 +1,8 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { useCart, useWishlist } from '../../context';
 import './index.css';
 
-function WishList() {
+export const WishList = () => {
     const { addedToWishList, addToWishlist } = useWishlist();
     const { addToCart } = useCart();
     return (
@@ -48,5 +47,3 @@ function WishList() {
         </section>
     )
 }
-
-export default WishList

@@ -1,8 +1,7 @@
-import React from 'react';
 import { v4 as uuid } from 'uuid';
 import { useProductFilter } from '../../context';
 
-export function ProductFilter() {
+export const ProductFilter = () => {
     const { state: { price, categories, ratings, sortBy }, dispatch } = useProductFilter();
 
     const ratingsList = ['1', '2', '3', '4'];

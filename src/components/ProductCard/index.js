@@ -1,13 +1,12 @@
-import React from 'react';
 import { useCart, useWishlist } from '../../context';
 import { ProductQuantity } from '../ProductQuantity';
 
-export function ProductCard({ product }) {
+export const ProductCard = ({ product }) => {
     const { image, alt, productName, discount, price, oldPrice, rating, id, quantity } = product;
 
     const { addToWishlist, addedToWishList } = useWishlist();
 
-    const { cartItems, addToCart, removeFromCart, quantityRemove, quantityAdd } = useCart();
+    const { cartItems, addToCart, removeFromCart } = useCart();
 
     return (
         <div className="ecommerce_card flex_column product_item">

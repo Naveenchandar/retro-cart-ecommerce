@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import './index.css';
@@ -7,7 +7,7 @@ import { useComponentVisible } from '../../hooks/useVisible';
 import { useRemoveLocalStorage } from '../../hooks/useLocalStorage';
 import { fetchNotification } from '../../utils';
 
-function NavBar() {
+export const NavBar = () => {
     const { user, updateUser } = useAuth();
     const removeStorage = useRemoveLocalStorage('retro-token');
     const navigate = useNavigate();
@@ -64,5 +64,3 @@ function NavBar() {
         </section>
     )
 }
-
-export default NavBar

@@ -1,8 +1,7 @@
-import React from 'react'
 import { Link } from 'react-router-dom';
 import './auth.css';
 
-function Login(props) {
+export const Login = (props) => {
     const { handleInputChange, handleLogin, info, errorInfo, togglePassword, showPassword, handleTestLogin, loading } = props;
     return (
         <section id="login">
@@ -66,5 +65,3 @@ function Login(props) {
         </section>
     )
 }
-
-export default Login

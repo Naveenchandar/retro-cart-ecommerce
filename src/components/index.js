@@ -1,2 +1,10 @@
+export { NavBar } from './navbar';
+export { Login } from './auth/login';
+export { SignUp } from './auth/signup';
+export { Categories } from './categories';
+export { Footer } from './footer';
+export { Notification } from './notification';
+export { ProductQuantity } from './ProductQuantity';
+export { NavRoutes } from './Routes';
 export { ProductCard } from './ProductCard';
 export { ProductFilter } from './ProductFilter';

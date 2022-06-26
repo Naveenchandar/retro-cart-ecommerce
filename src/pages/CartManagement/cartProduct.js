@@ -1,8 +1,7 @@
-import React from 'react'
-import { ProductQuantity } from '../../components/ProductQuantity'
+import { ProductQuantity } from '../../components';
 
-function CartProduct({ product: { id, image, productName, price, oldPrice, discount, quantity }, product, quantityAdd,
-    quantityRemove, removeFromCart, moveToWishList, addQuantity }) {
+export const CartProduct = ({ product: { id, image, productName, price, oldPrice, discount, quantity }, product, quantityAdd,
+    quantityRemove, removeFromCart, moveToWishList, addQuantity }) => {
     return (
         <section className="cart_list my-2" key={id}>
             <div className="cart_item border flex_row cart_gap justify_spacebtw">
@@ -32,5 +31,3 @@ function CartProduct({ product: { id, image, productName, price, oldPrice, disco
         </section>
     )
 }
-
-export default CartProduct

@@ -5,7 +5,7 @@ import { useWishlist } from "./wishlist";
 
 const CartContext = createContext([]);
 
-function fetchCartItems() {
+const fetchCartItems = () => {
     const cartItems = localStorage.getItem("retro-cart");
     if (JSON.parse(cartItems)?.length) {
         return JSON.parse(cartItems);

@@ -1,9 +1,9 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react/cjs/react.development';
-import Login from '../../components/auth/login';
+import { Login } from '../../components';
 import { useAuth } from '../../context';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { useSetLocalStorage } from '../../hooks/useLocalStorage';
@@ -86,6 +86,7 @@ export const LoginPage = () => {
         }
         setIsLoading(false);
     }
+
     return (
         <Login
             handleInputChange={handleInputChange}

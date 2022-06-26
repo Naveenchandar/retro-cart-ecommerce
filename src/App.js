@@ -1,7 +1,8 @@
 import { Toaster } from "react-hot-toast";
 import "./App.css";
-import NavBar from "./components/navbar";
-import NavRoutes from "./components/Routes";
+import {
+  NavBar, NavRoutes
+} from "./components";
 
 export const App = () => {
   return (

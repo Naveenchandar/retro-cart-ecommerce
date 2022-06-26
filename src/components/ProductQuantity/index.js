@@ -1,7 +1,6 @@
-import React from 'react'
 import { useCart } from '../../context'
 
-export function ProductQuantity({ id, price, quantity }) {
+export const ProductQuantity = ({ id, price, quantity }) => {
     const { quantityAdd, quantityRemove } = useCart();
     return (
         <div className="flex align_center cart_quantity cart_gap">

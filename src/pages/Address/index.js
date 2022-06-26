@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast';
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import Confetti from 'react-confetti'
 import { useGetLocalStorage, useSetLocalStorage } from '../../hooks/useLocalStorage';
 import { fetchItemById, updateItemById } from '../../utils';
-import AddressForm from './form';
+import { AddressForm } from './form';
 import './index.css';
 
-function Address() {
+export const Address = () => {
     const [showAddressForm, setShowAddressForm] = useState(false);
     const [editAddressForm, setEditAddressForm] = useState('');
     const setLocalStorage = useSetLocalStorage('retro-cart-address');
@@ -102,5 +102,3 @@ function Address() {
         </section>
     )
 }
-
-export default Address

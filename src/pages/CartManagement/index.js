@@ -1,11 +1,10 @@
-import React from 'react'
 import { Link } from 'react-router-dom';
 import { useCart } from '../../context';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
-import CartProduct from './cartProduct';
+import { CartProduct } from './cartProduct';
 import './index.css';
 
-function CartManagement() {
+export const CartManagement = () => {
 
     const { cartItems, quantityAdd, quantityRemove, addQuantity, removeFromCart, moveToWishList } = useCart();
 
@@ -72,5 +71,3 @@ function CartManagement() {
     }
     return <h4 className='text_center m-2'>No cart items added :(. <Link to="/products" className='shop_link'>Start shopping</Link></h4>
 }
-
-export default CartManagement

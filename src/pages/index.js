@@ -1,1 +1,9 @@
+export { Address } from "./Address";
+export { AddressForm } from "./Address/form";
+export { CartManagement } from "./CartManagement";
+export { CartProduct } from "./CartManagement/cartProduct";
+export { Home } from "./Home";
+export { NewArrivals } from "./Home/NewArrivals";
+export { Products } from "./Products";
+export { WishList } from "./Wishlist";
 export { LoginPage } from "./Login";

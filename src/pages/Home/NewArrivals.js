@@ -1,6 +1,4 @@
-import React from 'react'
-
-function NewArrivals({ season, image }) {
+export const NewArrivals = ({ season, image }) => {
     return (
         <div className="flex align_start new_arrivals_box">
             <div className="w-100">
@@ -18,5 +16,3 @@ function NewArrivals({ season, image }) {
         </div>
     )
 }
-
-export default NewArrivals
