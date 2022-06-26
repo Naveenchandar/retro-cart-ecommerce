@@ -1,5 +1,6 @@
 import React from 'react';
 import { useCart, useWishlist } from '../../context';
+import { ProductQuantity } from '../ProductQuantity';
 
 export function ProductCard({ product }) {
     const { image, alt, productName, discount, price, oldPrice, rating, id, quantity } = product;
@@ -46,13 +47,11 @@ export function ProductCard({ product }) {
                         <button className="product_remove_cart btn btn_primary p-2" onClick={() => removeFromCart(id)}>
                             Remove from cart
                         </button>
-                        <div className="flex align_center cart_quantity cart_gap">
-                            <div className="flex align_center cart_count cart_gap">
-                                <i className='fa fa-minus-circle pointer' onClick={() => quantityRemove(id, price, quantity)}></i>
-                                <span>{quantity}</span>
-                                <i className='fa fa-plus-circle pointer' onClick={() => quantityAdd(id, price, 1)}></i>
-                            </div>
-                        </div>
+                        <ProductQuantity
+                            id={id}
+                            price={price}
+                            quantity={quantity}
+                        />
                     </div>
                     :
                     <button className="product_add_cart btn btn_primary p-2" onClick={() => addToCart(product)}>
