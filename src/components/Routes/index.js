@@ -8,6 +8,7 @@ import Products from '../../pages/Products';
 import WishList from '../../pages/Wishlist';
 import CartManagement from '../../pages/CartManagement';
 import PrivateRoutes from './PrivateRoutes';
+import Address from '../../pages/Address';
 
 function NavRoutes() {
     return (
@@ -24,6 +25,12 @@ function NavRoutes() {
             <Route path="/cart" element={
                 <PrivateRoutes>
                     <CartManagement />
+                </PrivateRoutes>
+            }
+            />
+            <Route path="/address" element={
+                <PrivateRoutes>
+                    <Address />
                 </PrivateRoutes>
             }
             />

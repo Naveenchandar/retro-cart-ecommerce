@@ -18,9 +18,9 @@ function CartProduct({ product: { id, image, productName, price, oldPrice, disco
                     <div className="flex align_center cart_quantity cart_gap">
                         <span>Quantity :</span>
                         <div className="flex align_center cart_count cart_gap">
-                            <i className='fa fa-minus-circle' onClick={() => quantityRemove(id, price, quantity)}></i>
+                            <i className='fa fa-minus-circle pointer' onClick={() => quantityRemove(id, price, quantity)}></i>
                             <span>{quantity}</span>
-                            <i className='fa fa-plus-circle' onClick={() => quantityAdd(id, price, 1)}></i>
+                            <i className='fa fa-plus-circle pointer' onClick={() => quantityAdd(id, price, 1)}></i>
                         </div>
                     </div>
                     <div className="cart_btns flex flex_dcolumn w-100">

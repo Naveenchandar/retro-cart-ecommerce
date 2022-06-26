@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import { useCart } from '../../context';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import CartProduct from './cartProduct';
@@ -60,14 +61,16 @@ function CartManagement() {
                             <h5 className="font_bold flex justify_spacebtw total_amt">
                                 Total Amount <span><i className='fa fa-rupee'></i> {addTotalAmount() + 500} </span>
                             </h5>
-                            <button className="btn btn_primary font_bold text_uppercase w-100">Place Order</button>
+                            <button className="btn btn_primary font_bold text_uppercase w-100">
+                                <Link to="/address">Proceed to checkout</Link>
+                            </button>
                         </div>
                     </section>
                 </section>
             </>
         )
     }
-    return <h4 className='text_center m-2'>No cart items added.</h4>
+    return <h4 className='text_center m-2'>No cart items added :(. <Link to="/products" className='shop_link'>Start shopping</Link></h4>
 }
 
 export default CartManagement
