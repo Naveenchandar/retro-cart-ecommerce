@@ -12,7 +12,7 @@ import { useWindowSize } from '../../hooks/useWindowSize';
 export const Address = () => {
     const [showAddressForm, setShowAddressForm] = useState(false);
     const [editAddressForm, setEditAddressForm] = useState('');
-    const [deliverySelected, isDeliverySelected] = useState(false);
+    const [deliverySelected, setIsDeliverySelected] = useState(false);
     const setLocalStorage = useSetLocalStorage('retro-cart-address');
     const getLocalStorage = useGetLocalStorage('retro-cart-address');
     const [addressList, setAddressList] = useState(getLocalStorage('retro-cart-address') || []);
@@ -49,6 +49,11 @@ export const Address = () => {
 
     useEffect(() => {
         setLocalStorage('retro-cart-address', addressList, false);
+        return () => {
+            setIsDeliverySelected(false);
+            setEditAddressForm(false);
+            setShowAddressForm(false);
+        }
     }, [addressList])
 
     const renderAddressInfo = (label, info) => (
@@ -63,8 +68,10 @@ export const Address = () => {
     )
 
     const deliveryClick = () => {
-        isDeliverySelected(true);
-        // navigate('/products', { replace: true })
+        setIsDeliverySelected(true);
+        setTimeout(() => {
+            navigate('/products', { replace: true });
+        }, 5000)
     }
 
     if (!deliverySelected) {
