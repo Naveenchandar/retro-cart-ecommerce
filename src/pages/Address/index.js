@@ -54,7 +54,7 @@ export const Address = () => {
             setEditAddressForm(false);
             setShowAddressForm(false);
         }
-    }, [addressList])
+    }, [addressList, setLocalStorage])
 
     const renderAddressInfo = (label, info) => (
         label?.map((item, index) => (
