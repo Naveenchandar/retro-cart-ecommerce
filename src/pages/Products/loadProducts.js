@@ -1,6 +1,6 @@
 import { useProductFilter } from '../../context';
 
-const LoadProducts = (productsList) => {
+export const LoadProducts = (productsList) => {
 
     const { state: { sortBy, ratings, price, categories } } = useProductFilter();
 
@@ -42,6 +42,4 @@ const LoadProducts = (productsList) => {
     const ProductsFilteredByPrice = filterByPrice(productsFilteredByCategory, price);
     const productsFilterRatings = filterByRating(ProductsFilteredByPrice, ratings);
     return sortProductsByRange(productsFilterRatings, sortBy);
-}
-
-export { LoadProducts };
+};

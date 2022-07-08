@@ -1,8 +1,8 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 import { useCart, useWishlist } from '../../context';
 import './index.css';
 
-function WishList() {
+export const WishList = () => {
     const { addedToWishList, addToWishlist } = useWishlist();
     const { addToCart } = useCart();
     return (
@@ -40,12 +40,10 @@ function WishList() {
                     )
                 }) : (
                     <>
-                        <h4>No wish list items found.</h4>
+                        <h4>No wish list items found :(. <Link to="/products" className='shop_link'>Start shopping</Link></h4>
                     </>
                 )
             }
         </section>
     )
 }
-
-export default WishList

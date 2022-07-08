@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 
 const WishListContext = createContext([]);
 
-function fetchWishListItems() {
+const fetchWishListItems = () => {
     const wishlistitems = localStorage.getItem("retro-wishlist");
     if (JSON.parse(wishlistitems)?.length) {
         return JSON.parse(wishlistitems);

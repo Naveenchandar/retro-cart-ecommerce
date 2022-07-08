@@ -1,19 +1,26 @@
-import React from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import './index.css';
 import { useCart, useWishlist } from '../../context';
+import { useComponentVisible } from '../../hooks/useVisible';
+import { useRemoveLocalStorage } from '../../hooks/useLocalStorage';
+import { fetchNotification } from '../../utils';
 
-function NavBar() {
+export const NavBar = () => {
     const { user, updateUser } = useAuth();
+    const removeStorage = useRemoveLocalStorage('retro-token');
     const navigate = useNavigate();
     const handleLogout = () => {
-        updateUser(null);
         navigate('/login');
-        localStorage.removeItem('retro-token');
+        removeStorage('retro-token');
+        updateUser(null);
+        fetchNotification({ type: 'success', message: 'Successfully logged out' });
     }
     const { addedToWishList } = useWishlist();
     const { cartItems } = useCart();
+    const { ref, isComponentVisible } = useComponentVisible(true);
+    const [isLogoutVisible, setIsLogoutVisible] = useState(false);
     return (
         <section id="navbar">
             <div className="nav_group">
@@ -39,7 +46,12 @@ function NavBar() {
                             </span>
                         </Link>
                         {user?.email ?
-                            <button className="btn auth_btn" onClick={handleLogout}>Logout</button>
+                            <div ref={ref}>
+                                <h3 className="pointer username relative_pos" onClick={() => setIsLogoutVisible(isComponentVisible ? true : false)}>Hi, {user?.firstName}</h3>
+                                {isLogoutVisible && isComponentVisible && (
+                                    <button className="btn auth_btn logout_btn nav_link absolute_pos" onClick={handleLogout}>Logout</button>
+                                )}
+                            </div>
                             :
                             <>
                                 <button className="btn auth_btn"><Link to="/login">Login</Link></button>
@@ -52,5 +64,3 @@ function NavBar() {
         </section>
     )
 }
-
-export default NavBar

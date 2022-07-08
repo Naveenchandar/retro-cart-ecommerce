@@ -1,15 +1,13 @@
-import React from 'react';
 import { Routes, Route } from "react-router-dom";
 import { LoginPage } from '../../pages';
-import SignUp from '../auth/signup';
+import { SignUp } from '../auth/signup';
 import Mockman from "mockman-js";
-import Home from '../../pages/Home';
-import Products from '../../pages/Products';
-import WishList from '../../pages/Wishlist';
-import CartManagement from '../../pages/CartManagement';
-import PrivateRoutes from './PrivateRoutes';
+import {
+    Home, Products, WishList, CartManagement, Address
+} from '../../pages';
+import { PrivateRoutes } from './PrivateRoutes';
 
-function NavRoutes() {
+export const NavRoutes = () => {
     return (
         <Routes>
             <Route path="/" element={<Home />} />
@@ -27,11 +25,15 @@ function NavRoutes() {
                 </PrivateRoutes>
             }
             />
+            <Route path="/address" element={
+                <PrivateRoutes>
+                    <Address />
+                </PrivateRoutes>
+            }
+            />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/mock" element={<Mockman />} />
         </Routes>
     )
 }
-
-export default NavRoutes;

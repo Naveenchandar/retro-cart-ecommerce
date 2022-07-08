@@ -1,7 +1,7 @@
-import React from 'react'
+import { ProductQuantity } from '../../components';
 
-function CartProduct({ product: { id, image, productName, price, oldPrice, discount, quantity }, product, quantityAdd,
-    quantityRemove, removeFromCart, moveToWishList, addQuantity }) {
+export const CartProduct = ({ product: { id, image, productName, price, oldPrice, discount, quantity }, product, quantityAdd,
+    quantityRemove, removeFromCart, moveToWishList, addQuantity }) => {
     return (
         <section className="cart_list my-2" key={id}>
             <div className="cart_item border flex_row cart_gap justify_spacebtw">
@@ -15,14 +15,11 @@ function CartProduct({ product: { id, image, productName, price, oldPrice, disco
                         <span className="product_original_price"><i className='fa fa-rupee'></i>&nbsp;{oldPrice}</span>
                     </div>
                     <p className="cart_offer font_bold">{discount}% Off</p>
-                    <div className="flex align_center cart_quantity cart_gap">
-                        <span>Quantity :</span>
-                        <div className="flex align_center cart_count cart_gap">
-                            <i className='fa fa-minus-circle' onClick={() => quantityRemove(id, price, quantity)}></i>
-                            <span>{quantity}</span>
-                            <i className='fa fa-plus-circle' onClick={() => quantityAdd(id, price, 1)}></i>
-                        </div>
-                    </div>
+                    <ProductQuantity
+                        id={id}
+                        price={price}
+                        quantity={quantity}
+                    />
                     <div className="cart_btns flex flex_dcolumn w-100">
                         <button className="btn btn_outlined w-100" onClick={() => removeFromCart(id)}>Remove from cart</button>
                         <button className="btn btn_primary w-100" onClick={() => moveToWishList(product)}>
@@ -34,5 +31,3 @@ function CartProduct({ product: { id, image, productName, price, oldPrice, disco
         </section>
     )
 }
-
-export default CartProduct

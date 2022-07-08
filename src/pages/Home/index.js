@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 import './index.css';
 import FreeShippingIcon from '../../assets/images/free.svg';
 import DeliveryIcon from '../../assets/images/delivery.svg';
 import QualityIcon from '../../assets/images/quality.svg';
 import NewArrivalsImage from '../../assets/images/image_1.png';
-import axios from 'axios';
-import Categories from '../../components/categories';
-import Footer from '../../components/footer';
-import NewArrivals from './NewArrivals';
-import { Link } from 'react-router-dom';
+import { Categories, Footer } from '../../components';
+import { NewArrivals } from './NewArrivals';
 
-function Home() {
+export const Home = () => {
     const [categories, setCategories] = useState([]);
+
     useEffect(() => {
         (async () => {
             try {
@@ -26,6 +26,7 @@ function Home() {
             }
         })();
     }, [])
+
     return (
         <section id="home_main">
             <section className="header_group">
@@ -127,5 +128,3 @@ function Home() {
         </section>
     )
 }
-
-export default Home

@@ -1,4 +1,3 @@
-import React from 'react'
 import './index.css';
 import { Oval } from 'react-loader-spinner';
 import { ProductFilter, ProductCard } from '../../components';
@@ -6,13 +5,11 @@ import { useProducts } from '../../context';
 import { LoadProducts } from './loadProducts';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 
-
-
-function Products() {
+export const Products = () => {
     const { productState: { products, loading, error } } = useProducts();
     const productsList = LoadProducts(products);
 
-    useDocumentTitle('Retor Cart | Products');
+    useDocumentTitle('Retro Cart | Products');
 
     const renderProducts = () => {
         if (error) {
@@ -54,5 +51,3 @@ function Products() {
         </section>
     )
 }
-
-export default Products

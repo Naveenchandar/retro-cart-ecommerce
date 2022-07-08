@@ -1,9 +1,8 @@
-import React from 'react'
 import { Link } from 'react-router-dom';
 import './auth.css';
 
-function Login(props) {
-    const { handleInputChange, handleLogin, info, errorInfo, togglePassword, showPassword, handleTestLogin } = props;
+export const Login = (props) => {
+    const { handleInputChange, handleLogin, info, errorInfo, togglePassword, showPassword, handleTestLogin, loading } = props;
     return (
         <section id="login">
             <form onSubmit={handleLogin}>
@@ -58,7 +57,7 @@ function Login(props) {
                         </button>
                         <button
                             className="login_btn btn btn_primary w-100"
-                        >Login</button>
+                        >{loading ? 'Loading' : 'Login'}</button>
                         <p className="login_new_acc text_center m-1"><Link to='/signup'>Create New Account </Link></p>
                     </div>
                 </div>
@@ -66,5 +65,3 @@ function Login(props) {
         </section>
     )
 }
-
-export default Login

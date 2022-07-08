@@ -1,6 +1,4 @@
-import React from 'react';
-
-function Footer() {
+export const Footer = () => {
     return (
         <footer className="p-2">
             <div className="copy_rights text_center flex_column">
@@ -22,5 +20,3 @@ function Footer() {
         </footer >
     )
 }
-
-export default Footer

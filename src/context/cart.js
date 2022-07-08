@@ -1,9 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { useProducts } from ".";
+import { productQuantityDecrement, productQuantityIncrement } from "../utils";
 import { useWishlist } from "./wishlist";
 
 const CartContext = createContext([]);
 
-function fetchCartItems() {
+const fetchCartItems = () => {
     const cartItems = localStorage.getItem("retro-cart");
     if (JSON.parse(cartItems)?.length) {
         return JSON.parse(cartItems);
@@ -13,12 +15,13 @@ function fetchCartItems() {
 
 const CartProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState(fetchCartItems());
+    const { productState: { products } } = useProducts();
 
     const { addToWishlist } = useWishlist();
 
     useEffect(() => {
         localStorage.setItem("retro-cart", JSON.stringify(cartItems));
-      }, [cartItems]);
+    }, [cartItems]);
 
     const moveToWishList = (product) => {
         addToWishlist(product);
@@ -26,12 +29,11 @@ const CartProvider = ({ children }) => {
     }
 
     const quantityAdd = (addProductId, addProductPrice, addProductQuantity) => {
-        const filterProduct = cartItems.map(item => {
-            if (item.id === addProductId) {
-                item.quantity += 1;
-            }
-            return item;
-        });
+        const productObj = {
+            id: addProductId, price: addProductPrice, quantity: addProductQuantity, data: products
+        }
+        productQuantityIncrement(productObj);
+        const filterProduct = productQuantityIncrement({ ...productObj, data: cartItems })
         setCartItems(filterProduct);
     }
 
@@ -39,16 +41,8 @@ const CartProvider = ({ children }) => {
         if (quantity === 1) {
             removeFromCart(id);
         } else {
-            const filterProduct = cartItems.map(item => {
-                if (item.id === id && item.quantity > 1) {
-                    item.quantity -= 1;
-                }
-                if (item.id === id && item.quantity <= 1) {
-                    removeFromCart(id);
-                }
-                return item;
-            });
-            setCartItems(filterProduct);
+            const productObj = { id, price, quantity, data: products, removeFromCart };
+            setCartItems(productQuantityDecrement({ ...productObj, data: cartItems }));
         }
     }
 

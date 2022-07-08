@@ -1,8 +1,8 @@
-import React from 'react';
 import { useCart, useWishlist } from '../../context';
+import { ProductQuantity } from '../ProductQuantity';
 
-export function ProductCard({ product }) {
-    const { image, alt, productName, discount, price, oldPrice, rating, id } = product;
+export const ProductCard = ({ product }) => {
+    const { image, alt, productName, discount, price, oldPrice, rating, id, quantity } = product;
 
     const { addToWishlist, addedToWishList } = useWishlist();
 
@@ -42,10 +42,16 @@ export function ProductCard({ product }) {
                     <span className="product_original_price">Rs. {oldPrice}</span>
                 </div>
                 {cartItems.find(item => item.id === id) ?
-
-                    <button className="product_remove_cart btn btn_primary p-2" onClick={() => removeFromCart(id)}>
-                        Remove from cart
-                    </button>
+                    <div className='flex'>
+                        <button className="product_remove_cart btn btn_primary p-2" onClick={() => removeFromCart(id)}>
+                            Remove from cart
+                        </button>
+                        <ProductQuantity
+                            id={id}
+                            price={price}
+                            quantity={quantity}
+                        />
+                    </div>
                     :
                     <button className="product_add_cart btn btn_primary p-2" onClick={() => addToCart(product)}>
                         Add to cart

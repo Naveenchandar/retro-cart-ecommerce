@@ -1,9 +1,13 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Login from '../../components/auth/login';
+import { useEffect } from 'react/cjs/react.development';
+import { Login } from '../../components';
 import { useAuth } from '../../context';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
+import { useSetLocalStorage } from '../../hooks/useLocalStorage';
+import { fetchNotification } from '../../utils';
 
 export const LoginPage = () => {
     const [info, setUserInfo] = useState({
@@ -13,14 +17,25 @@ export const LoginPage = () => {
         email: '', password: '', error: ''
     });
     const [showPassword, setShowPassword] = useState(false);
+    const [loading, setIsLoading] = useState(false);
 
     const { updateUser } = useAuth();
+    const setLocalStorage = useSetLocalStorage("name", "Bob");
 
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "";
 
     useDocumentTitle('Retro Cart | Login');
+
+    useEffect(() => {
+        return () => {
+            setUserInfo({ email: '', password: '' });
+            setErrorInfo({ email: '', password: '', error: '' });
+            setShowPassword(false);
+            setIsLoading(false);
+        }
+    }, [])
 
 
     const handleInputChange = (targetValue, type) => {
@@ -52,21 +67,26 @@ export const LoginPage = () => {
 
     const handleLogin = async (event) => {
         event.preventDefault();
+        setIsLoading(true);
         try {
             if (handleValidation()) {
                 const { status, data: { encodedToken } } = await axios.post("/api/auth/login", info)
                 if (status === 200 && encodedToken) {
-                    updateUser(info);
-                    localStorage.setItem("retro-token", encodedToken);
-                    navigate(from, { replace: true });
+                    toast.success('logged in successfully');
+                    setLocalStorage("retro-token", encodedToken, true);
+                    updateUser();
+                    navigate(from ? from : '/', { replace: true });
                 } else {
                     throw new Error('Email or Password is incorrect');
                 }
             }
         } catch (error) {
+            fetchNotification({ type: 'error', message: 'Email or Password is incorrect' });
             setErrorInfo({ error: 'Email or Password is incorrect' });
         }
+        setIsLoading(false);
     }
+
     return (
         <Login
             handleInputChange={handleInputChange}
@@ -79,13 +99,18 @@ export const LoginPage = () => {
                 setUserInfo({
                     email: "adarshbalika@gmail.com",
                     password: "adarshbalika",
+                    username: "adarshbalika"
                 });
                 updateUser({
                     email: "adarshbalika@gmail.com",
                     password: "adarshbalika",
+                    firstName: "Adarsh",
+                    lastName: "Balika"
                 })
-                navigate(from, { replace: true });
+                fetchNotification({ type: 'success', message: 'Welcome adarshbalika' });
+                navigate(from ? from : '/', { replace: true });
             }}
+            loading={loading}
         />
     )
 }
