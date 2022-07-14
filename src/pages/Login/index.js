@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react/cjs/react.development';
 import { Login } from '../../components';
 import { useAuth } from '../../context';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
