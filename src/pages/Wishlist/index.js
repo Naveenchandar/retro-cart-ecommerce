@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { NoProduct } from '../../components/NoProduct';
 import { useCart, useWishlist } from '../../context';
 import './index.css';
 
@@ -14,7 +15,10 @@ export const WishList = () => {
                         <div className="ecommerce_card wishlist_card flex_column" key={id}>
                             <div className="product_image w-100">
                                 <img src={image} className="w-100 block m_auto" alt={`wishlist product-${id}`} />
-                                <i className="fa fa-heart product_wishlist pointer" onClick={() => addToWishlist(product, 'remove')}></i>
+                                <i
+                                    className="fa fa-heart product_wishlist pointer"
+                                    onClick={() => addToWishlist(product, 'remove')}
+                                ></i>
                             </div>
                             <div className="product_details flex flex_dcolumn w-100">
                                 <div className="product_info">
@@ -39,11 +43,13 @@ export const WishList = () => {
                         </div>
                     )
                 }) : (
-                    <>
-                        <h4>No wish list items found :(. <Link to="/products" className='shop_link'>Start shopping</Link></h4>
-                    </>
+                    <NoProduct
+                        message='No wish list items found :(.'
+                        icon={{ className: 'fa fa-heart-o', icon: true }}
+                        redirect
+                    />
                 )
             }
-        </section>
+        </section >
     )
 }

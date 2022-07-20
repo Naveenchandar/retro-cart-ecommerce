@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { NoProduct } from '../../components/NoProduct';
 import { useCart } from '../../context';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { CartProduct } from './cartProduct';
@@ -69,5 +70,11 @@ export const CartManagement = () => {
             </>
         )
     }
-    return <h4 className='text_center m-2'>No cart items added :(. <Link to="/products" className='shop_link'>Start shopping</Link></h4>
+    return (
+        <NoProduct
+            message='No cart list items found :(.'
+            icon={{ className: 'fa fa-shopping-cart', icon: true }}
+            redirect
+        />
+    )
 }
