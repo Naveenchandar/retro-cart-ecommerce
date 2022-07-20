@@ -7,6 +7,7 @@ export const ProductCard = ({ product }) => {
     const { addToWishlist, addedToWishList } = useWishlist();
 
     const { cartItems, addToCart, removeFromCart } = useCart();
+    const findCartProduct = cartItems.find(item => item.id === id);
 
     return (
         <div className="ecommerce_card flex_column product_item">
@@ -41,8 +42,8 @@ export const ProductCard = ({ product }) => {
                     &ensp;
                     <span className="product_original_price">Rs. {oldPrice}</span>
                 </div>
-                {cartItems.find(item => item.id === id) ?
-                    <div className='flex'>
+                {findCartProduct ?
+                    <div className='flex justify_center'>
                         <button className="product_remove_cart btn btn_primary p-2" onClick={() => removeFromCart(id)}>
                             Remove from cart
                         </button>

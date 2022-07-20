@@ -34,8 +34,8 @@ export const productQuantityDecrement = ({ id, price, quantity, data, removeFrom
         if (item.id === id && item.quantity > 1) {
             item.quantity -= 1;
         }
-        if (item.id === id && item.quantity <= 1) {
-            removeFromCart(id);
+        if (item.id === id && item.quantity < 1) {
+            item = null;
         }
         return item;
     });

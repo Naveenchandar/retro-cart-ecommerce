@@ -46,7 +46,10 @@ export const CartManagement = () => {
                                         {cartItems?.map(({ quantity, price, id }) => {
                                             return (
                                                 <div key={id}>
-                                                    <span className='product_price_detail'>{quantity} * {parseInt(price)} = <i className='fa fa-rupee'></i>&nbsp;{quantity * price}</span>
+                                                    <span className='product_price_detail'>
+                                                        {quantity} * {parseInt(price)} =
+                                                        <i className='fa fa-rupee'></i>&nbsp;{quantity * price}
+                                                    </span>
                                                 </div>
                                             )
                                         })}
