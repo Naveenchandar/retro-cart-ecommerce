@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import './auth.css';
 
 export const Login = (props) => {
-    const { handleInputChange, handleLogin, info, errorInfo, togglePassword, showPassword, handleTestLogin, loading } = props;
+    const { handleInputChange, handleLogin, info, errorInfo, togglePassword, showPassword, handleTestLogin, loading,googleBtn } = props;
     return (
         <section id="login">
             <form onSubmit={handleLogin}>
@@ -55,9 +55,13 @@ export const Login = (props) => {
                         >
                             Test login
                         </button>
-                        <button
-                            className="login_btn btn btn_primary w-100"
-                        >{loading ? 'Loading' : 'Login'}</button>
+                        <p className="login_new_acc text_center m-1">OR</p>
+                        <div className='flex align_center justify_center'>
+                            <button
+                                className="login_btn btn btn_primary w-100"
+                            >{loading ? 'Loading' : 'Login'}</button>
+                            {googleBtn}
+                        </div>
                         <p className="login_new_acc text_center m-1"><Link to='/signup'>Create New Account </Link></p>
                     </div>
                 </div>

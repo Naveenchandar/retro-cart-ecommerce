@@ -2,11 +2,13 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { GoogleLogin as LoginGoogle } from '@react-oauth/google';
 import { Login } from '../../components';
 import { useAuth } from '../../context';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { useSetLocalStorage } from '../../hooks/useLocalStorage';
 import { fetchNotification } from '../../utils';
+import jwt_decode from "jwt-decode";
 
 export const LoginPage = () => {
     const [info, setUserInfo] = useState({
@@ -86,6 +88,56 @@ export const LoginPage = () => {
         setIsLoading(false);
     }
 
+    const onSuccess = ({ clientId, credential }) => {
+        if (clientId && credential) {
+            const { email = '', name = '', given_name = '', family_name = '' } = jwt_decode(credential);
+            if (!email || !name || !given_name || !family_name) {
+                setErrorInfo({ ...errorInfo, error: 'Invalid credentials' });
+            } else {
+                setUserInfo({
+                    email: email,
+                    username: `${given_name} ${family_name}`
+                });
+                updateUser({
+                    email: email,
+                    firstName: given_name,
+                    lastName: family_name
+                });
+                navigate(from ? from : '/', { replace: true });
+            }
+        }
+    }
+
+    const onFailure = () => {
+        setErrorInfo({ ...errorInfo, error: 'Googlr login failed, Invalid credentials' });
+    }
+
+    const renderGoogleSignIn = () => (
+        <LoginGoogle
+            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+            buttonText="Login"
+            onSuccess={onSuccess}
+            onFailure={onFailure}
+            cookiePolicy={'single_host_origin'}
+        />
+    )
+
+    const testLogin = () => {
+        setUserInfo({
+            email: "adarshbalika@gmail.com",
+            password: "adarshbalika",
+            username: "adarshbalika"
+        });
+        updateUser({
+            email: "adarshbalika@gmail.com",
+            password: "adarshbalika",
+            firstName: "Adarsh",
+            lastName: "Balika"
+        })
+        fetchNotification({ type: 'success', message: 'Welcome adarshbalika' });
+        navigate(from ? from : '/', { replace: true });
+    }
+
     return (
         <Login
             handleInputChange={handleInputChange}
@@ -94,21 +146,8 @@ export const LoginPage = () => {
             errorInfo={errorInfo}
             togglePassword={() => setShowPassword((showPassword) => !showPassword)}
             showPassword={showPassword}
-            handleTestLogin={() => {
-                setUserInfo({
-                    email: "adarshbalika@gmail.com",
-                    password: "adarshbalika",
-                    username: "adarshbalika"
-                });
-                updateUser({
-                    email: "adarshbalika@gmail.com",
-                    password: "adarshbalika",
-                    firstName: "Adarsh",
-                    lastName: "Balika"
-                })
-                fetchNotification({ type: 'success', message: 'Welcome adarshbalika' });
-                navigate(from ? from : '/', { replace: true });
-            }}
+            handleTestLogin={testLogin}
+            googleBtn={renderGoogleSignIn()}
             loading={loading}
         />
     )

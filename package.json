@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@react-oauth/google": "^0.2.6",
     "axios": "^0.26.1",
     "dayjs": "^1.11.0",
     "firebase": "^9.8.4",

@@ -3,15 +3,16 @@ import "./App.css";
 import {
   NavBar, NavRoutes
 } from "./components";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 export const App = () => {
   return (
-    <div>
+    <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
       <Toaster position="top-right" toastOptions={{
         className: 'notification',
       }} />
       <NavBar />
       <NavRoutes />
-    </div>
+    </GoogleOAuthProvider>
   );
 }
