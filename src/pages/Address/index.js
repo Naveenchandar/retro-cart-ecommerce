@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast';
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import Confetti from 'react-confetti';
-import { useGetLocalStorage, useSetLocalStorage } from '../../hooks/useLocalStorage';
-import { fetchItemById, updateItemById } from '../../utils';
+import { useGetLocalStorage, useSetLocalStorage } from 'hooks/useLocalStorage';
+import { fetchItemById, updateItemById } from 'utils';
 import { AddressForm } from './form';
 import './index.css';
 import { useNavigate } from 'react-router-dom';
-import { useWindowSize } from '../../hooks/useWindowSize';
+import { useWindowSize } from 'hooks/useWindowSize';
 
 export const Address = () => {
     const [showAddressForm, setShowAddressForm] = useState(false);

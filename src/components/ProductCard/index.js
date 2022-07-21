@@ -1,5 +1,5 @@
-import { useCart, useWishlist } from '../../context';
-import { ProductQuantity } from '../ProductQuantity';
+import { useCart, useWishlist } from 'context';
+import { ProductQuantity } from 'components/ProductQuantity';
 
 export const ProductCard = ({ product }) => {
     const { image, alt, productName, discount, price, oldPrice, rating, id, quantity } = product;

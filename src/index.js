@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
-import "./index.css";
-import { App } from "./App";
-import { makeServer } from "./server";
-import { ContextProvider } from "./context/provider";
+import "index.css";
+import { App } from "App";
+import { makeServer } from "server";
+import { ContextProvider } from "context/provider";
 
 // Call make Server
 makeServer();

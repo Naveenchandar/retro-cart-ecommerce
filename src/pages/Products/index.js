@@ -1,9 +1,9 @@
 import './index.css';
 import { Oval } from 'react-loader-spinner';
-import { ProductFilter, ProductCard } from '../../components';
-import { useProducts } from '../../context';
+import { ProductFilter, ProductCard } from 'components';
+import { useProducts } from 'context';
 import { LoadProducts } from './loadProducts';
-import { useDocumentTitle } from '../../hooks/useDocumentTitle';
+import { useDocumentTitle } from 'hooks/useDocumentTitle';
 
 export const Products = () => {
     const { productState: { products, loading, error } } = useProducts();

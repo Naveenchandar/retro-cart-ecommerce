@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer, useEffect } from 'react';
-import { productReducer } from '../reducer/products';
+import { productReducer } from 'reducer/products';
 import axios from 'axios';
 
 const initalState = {

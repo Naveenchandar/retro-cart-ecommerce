@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useProducts } from ".";
-import { fetchItemById, productQuantityDecrement, productQuantityIncrement } from "../utils";
+import { fetchItemById, productQuantityDecrement, productQuantityIncrement } from "utils";
 import { useWishlist } from "./wishlist";
 
 const CartContext = createContext([]);

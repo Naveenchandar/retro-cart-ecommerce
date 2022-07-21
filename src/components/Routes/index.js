@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
-import { LoginPage } from '../../pages';
-import { SignUp } from '../auth/signup';
+import { LoginPage } from 'pages';
+import { SignUp } from 'components/auth/signup';
 import Mockman from "mockman-js";
 import {
     Home, Products, WishList, CartManagement, Address
