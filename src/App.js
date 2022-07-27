@@ -1,6 +1,6 @@
 import { Toaster } from "react-hot-toast";
-import "App.css";
-import { NavBar, NavRoutes, ErrorBoundaries } from "components";
+import "./App.css";
+import { NavBar, NavRoutes, ErrorBoundaries } from "./components";
 
 export const App = () => {
   return (
