@@ -2,7 +2,7 @@ import { useCart, useWishlist } from 'context';
 import { ProductQuantity } from 'components/ProductQuantity';
 
 export const ProductCard = ({ product }) => {
-    const { image, alt, productName, discount, price, oldPrice, rating, id, quantity, _id } = product;
+    const { image, alt, productName, discount, price, oldPrice, rating, qty, _id } = product;
 
     const { addToWishlist, wishlistItems } = useWishlist();
 
@@ -48,9 +48,9 @@ export const ProductCard = ({ product }) => {
                             Remove from cart
                         </button>
                         <ProductQuantity
-                            id={id}
+                            id={_id}
                             price={price}
-                            quantity={quantity}
+                            quantity={qty}
                         />
                     </div>
                     :

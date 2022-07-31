@@ -1,7 +1,7 @@
 import { ProductQuantity } from 'components';
 
 export const CartProduct = ({ product:
-    { id, image, productName, price, oldPrice, discount, quantity, _id: productId },
+    { id, image, productName, price, oldPrice, discount, qty, _id: productId },
     product, quantityAdd, quantityRemove, removeFromCart, moveToWishList, addQuantity }) => {
     return (
         <section className="cart_list my-2" key={id}>
@@ -17,9 +17,9 @@ export const CartProduct = ({ product:
                     </div>
                     <p className="cart_offer font_bold">{discount}% Off</p>
                     <ProductQuantity
-                        id={id}
+                        id={productId}
                         price={price}
-                        quantity={quantity}
+                        quantity={qty}
                     />
                     <div className="cart_btns flex flex_dcolumn w-100">
                         <button className="btn btn_outlined w-100" onClick={() => removeFromCart(productId)}>Remove from cart</button>

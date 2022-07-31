@@ -1,8 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useProducts } from ".";
-import { fetchItemById, productQuantityDecrement, productQuantityIncrement } from "utils";
+import { fetchItemById, productQuantityDecrement } from "utils";
 import { useWishlist } from "./wishlist";
-import { addCartItem, fetchCartItems, removeCartItem } from "services/cart";
+import { addCartItem, fetchCartItems, removeCartItem, updateCartItemQuantity } from "services/cart";
 
 const CartContext = createContext([]);
 
@@ -37,21 +37,42 @@ const CartProvider = ({ children }) => {
         return data.map(item => item.id === productId ? fetchItemById(productId, data) : item)
     }
 
-    const quantityAdd = (addProductId, addProductPrice, addProductQuantity) => {
-        const productObj = {
-            id: addProductId, price: addProductPrice, quantity: addProductQuantity, data: products
-        }
-        const filterProduct = productQuantityIncrement({ ...productObj, data: cartItems });
-        const newProducts = updateProductsQuanitity(products, addProductId);
-        productDispatch({
-            type: 'FETCH_PRODUCTS_SUCCESS',
-            payload: {
-                products: newProducts,
-                error: null,
-                loading: false
+    const quantityAdd = async (productId, addProductPrice, addProductQuantity) => {
+        // const productObj = {
+        //     id: addProductId, price: addProductPrice, quantity: addProductQuantity, data: products
+        // }
+        // const filterProduct = productQuantityIncrement({ ...productObj, data: cartItems });
+        // const newProducts = updateProductsQuanitity(products, addProductId);
+        // productDispatch({
+        //     type: 'FETCH_PRODUCTS_SUCCESS',
+        //     payload: {
+        //         products: newProducts,
+        //         error: null,
+        //         loading: false
+        //     }
+        // });
+        // setCartItems(filterProduct);
+        const data = await updateCartItemQuantity(productId, 'increment');
+        if (data?.length > 0) {
+            const findProduct = data?.find(({ _id }) => _id === productId);
+            if (findProduct) {
+                const newProducts = products.map(item => {
+                    if (item._id === findProduct?._id) {
+                        return item = findProduct;
+                    }
+                    return { ...item };
+                });
+                productDispatch({
+                    type: 'FETCH_PRODUCTS_SUCCESS',
+                    payload: {
+                        products: newProducts,
+                        error: null,
+                        loading: false
+                    }
+                });
             }
-        });
-        setCartItems(filterProduct);
+            setCartItems(data);
+        }
     }
 
     const quantityRemove = (id, price, quantity) => {

@@ -40,7 +40,7 @@ export const addCartItem = async (product) => {
 export const removeCartItem = async (productId) => {
     try {
         const { status, data: { cart } } = await baseUrl.delete(`user/cart/${productId}`);
-        if(status === 200){
+        if (status === 200) {
             return cart;
         } else {
             throw new Error('Error occurred while removing cart, please try again');
@@ -51,6 +51,25 @@ export const removeCartItem = async (productId) => {
         fetchNotification({
             type: 'error',
             message: 'Error occurred while removing cart, please try again'
+        });
+        return false;
+    }
+}
+
+export const updateCartItemQuantity = async (productId, type) => {
+    try {
+        const { status, data: {cart} } = await baseUrl.post(`user/cart/${productId}`, { action: { type } });
+        if(status === 200){
+            return cart;
+        } else {
+            throw new Error('Error occurred while updating cart item, please try again')
+        }
+    } catch (error) {
+        console.log('error:', JSON.parse(JSON.stringify(error)));
+        console.error('removeCartItem:', error?.response?.data?.error || error?.response?.data?.message || error?.message)
+        fetchNotification({
+            type: 'error',
+            message: 'Error occurred while updating cart item, please try again'
         });
         return false;
     }

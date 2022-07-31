@@ -19,7 +19,7 @@ export const products = [
     inStock: true,
     discount: Math.floor(Math.random() * 100),
     rating: '3.5',
-    quantity: 1
+    qty: 1
   },
   {
     _id: uuid(),
@@ -34,7 +34,7 @@ export const products = [
     inStock: true,
     discount: Math.floor(Math.random() * 100),
     rating: 4,
-    quantity: 1
+    qty: 1
   },
   {
     _id: uuid(),
@@ -49,7 +49,7 @@ export const products = [
     inStock: true,
     discount: Math.floor(Math.random() * 100),
     rating: 4,
-    quantity: 1
+    qty: 1
   },
   {
     _id: uuid(),
@@ -64,7 +64,7 @@ export const products = [
     inStock: true,
     discount: Math.floor(Math.random() * 100),
     rating: 3,
-    quantity: 1
+    qty: 1
   },
   {
     _id: uuid(),
@@ -79,7 +79,7 @@ export const products = [
     inStock: true,
     discount: Math.floor(Math.random() * 100),
     rating: 2,
-    quantity: 1
+    qty: 1
   },
   {
     _id: uuid(),
@@ -94,7 +94,7 @@ export const products = [
     inStock: true,
     discount: Math.floor(Math.random() * 100),
     rating: 2,
-    quantity: 1
+    qty: 1
   },
   {
     _id: uuid(),
@@ -109,7 +109,7 @@ export const products = [
     inStock: true,
     discount: Math.floor(Math.random() * 100),
     rating: 4,
-    quantity: 1
+    qty: 1
   },
   {
     _id: uuid(),
@@ -124,7 +124,7 @@ export const products = [
     inStock: true,
     discount: Math.floor(Math.random() * 100),
     rating: 3.5,
-    quantity: 1
+    qty: 1
   },
   {
     _id: uuid(),
@@ -139,7 +139,7 @@ export const products = [
     inStock: true,
     discount: Math.floor(Math.random() * 100),
     rating: 3,
-    quantity: 1
+    qty: 1
   },
   {
     _id: uuid(),
@@ -154,7 +154,7 @@ export const products = [
     inStock: true,
     discount: Math.floor(Math.random() * 100),
     rating: 2.5,
-    quantity: 1
+    qty: 1
   },
   {
     _id: uuid(),
@@ -169,6 +169,6 @@ export const products = [
     inStock: true,
     discount: Math.floor(Math.random() * 100),
     rating: 3.5,
-    quantity: 1
+    qty: 1
   }
 ];

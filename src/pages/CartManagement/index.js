@@ -12,7 +12,7 @@ export const CartManagement = () => {
 
     const addTotalAmount = () => {
         const amount = cartItems.reduce((a, b) => {
-            return a + parseInt(b.quantity * b.price)
+            return a + parseInt(b.qty * b.price)
         }, 0);
         return Number.isNaN(amount) ? 0 : amount;
     }
