@@ -43,12 +43,12 @@ export const CartManagement = () => {
                                 <li className="flex justify_spacebtw">
                                     <span>Price ({cartItems.length} items)</span>
                                     <div>
-                                        {cartItems?.map(({ quantity, price, id }) => {
+                                        {cartItems?.map(({ qty, price, id }) => {
                                             return (
                                                 <div key={id}>
                                                     <span className='product_price_detail'>
-                                                        {quantity} * {parseInt(price)} =
-                                                        <i className='fa fa-rupee'></i>&nbsp;{quantity * price}
+                                                        {qty} * {parseInt(price)} = &nbsp;
+                                                        <i className='fa fa-rupee'></i>&nbsp;{qty * price}
                                                     </span>
                                                 </div>
                                             )
@@ -57,11 +57,11 @@ export const CartManagement = () => {
                                 </li>
                                 <li className="flex justify_spacebtw">
                                     <span>Deliver charges</span>
-                                    <span><i className='fa fa-rupee'></i>&nbsp;500</span>
+                                    <span><i className='fa fa-rupee'></i>&nbsp;50</span>
                                 </li>
                             </ul>
                             <h5 className="font_bold flex justify_spacebtw total_amt">
-                                Total Amount <span><i className='fa fa-rupee'></i> {addTotalAmount() + 500} </span>
+                                Total Amount <span><i className='fa fa-rupee'></i> {addTotalAmount() + 50} </span>
                             </h5>
                             <button className="btn btn_primary font_bold text_uppercase w-100">
                                 <Link to="/address">Proceed to checkout</Link>

@@ -3,12 +3,12 @@ import { useCart, useWishlist } from 'context';
 import './index.css';
 
 export const WishList = () => {
-    const { addedToWishList, addToWishlist } = useWishlist();
+    const { wishlistItems, addToWishlist } = useWishlist();
     const { addToCart } = useCart();
     return (
         <section className="wishlist_main p-4 flex_row justify_even">
-            {addedToWishList.length > 0 ?
-                addedToWishList.map(product => {
+            {wishlistItems.length > 0 ?
+                wishlistItems.map(product => {
                     const { image, productName, price, oldPrice, id, rating, discount, qty = 1 } = product;
                     return (
                         <div className="ecommerce_card wishlist_card flex_column" key={id}>
