@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import Confetti from 'react-confetti';
 // import { useGetLocalStorage, useSetLocalStorage } from 'hooks/useLocalStorage';
-import { fetchItemById, updateItemById } from 'utils';
+// import { fetchItemById, updateItemById } from 'utils';
 import { AddressForm } from './form';
 import './index.css';
 import { useNavigate } from 'react-router-dom';
@@ -60,11 +60,9 @@ export const Address = () => {
 
     useEffect(() => {
         return () => {
-            return () => {
-                setIsDeliverySelected(false);
-                setEditAddressForm(false);
-                setShowAddressForm(false);
-            }
+            setIsDeliverySelected(false);
+            setEditAddressForm(false);
+            setShowAddressForm(false);
         }
     }, [])
 
@@ -91,7 +89,7 @@ export const Address = () => {
         setEditAddressForm('');
     }
 
-    const deleteAddress = async(addressId) => {
+    const deleteAddress = async (addressId) => {
         const addresses = await removeAddress(addressId);
         setAddressList(addresses);
     }
@@ -120,10 +118,10 @@ export const Address = () => {
                                                 title='Edit Address'
                                                 onClick={() => editAddress(_id)}
                                             /> &nbsp;
-                                            <AiOutlineDelete 
-                                                className='pointer' 
-                                                title='Delete Address' 
-                                                onClick={async() => await deleteAddress(_id)} />
+                                            <AiOutlineDelete
+                                                className='pointer'
+                                                title='Delete Address'
+                                                onClick={async () => await deleteAddress(_id)} />
                                         </div>
                                     </h4>
                                     {renderAddressInfo(
