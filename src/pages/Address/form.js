@@ -17,6 +17,14 @@ export const AddressForm = ({ addAddress, edit }) => {
                 name, phoneNum, country, state, landmark, pincode, fullAddress, _id
             })
         }
+        return () => {
+            setAddress({
+                name: '', phoneNum: '', country: '', state: '', landmark: '', pincode: '', fullAddress: ''
+            });
+            setErrorInfo({
+                name: '', phoneNum: '', country: '', state: '', landmark: '', pincode: '', fullAddress: ''
+            });
+        }
     }, [edit])
 
     const { name, phoneNum, country, state, landmark, pincode, fullAddress } = address;
