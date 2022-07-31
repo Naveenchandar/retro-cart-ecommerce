@@ -8,7 +8,7 @@ import { AddressForm } from './form';
 import './index.css';
 import { useNavigate } from 'react-router-dom';
 import { useWindowSize } from 'hooks/useWindowSize';
-import { addressAddNew } from 'services/address';
+import { addressAddNew, removeAddress } from 'services/address';
 
 export const Address = () => {
     const [showAddressForm, setShowAddressForm] = useState(false);
@@ -88,6 +88,11 @@ export const Address = () => {
         setEditAddressForm('');
     }
 
+    const deleteAddress = async(addressId) => {
+        const addresses = await removeAddress(addressId);
+        setAddressList(addresses);
+    }
+
     if (!deliverySelected) {
         return (
             <section className='flex align_center flex_dcolumn address_section'>
@@ -112,7 +117,10 @@ export const Address = () => {
                                                 title='Edit Address'
                                                 onClick={() => editAddress(_id)}
                                             /> &nbsp;
-                                            <AiOutlineDelete className='pointer' title='Delete Address' />
+                                            <AiOutlineDelete 
+                                                className='pointer' 
+                                                title='Delete Address' 
+                                                onClick={async() => await deleteAddress(_id)} />
                                         </div>
                                     </h4>
                                     {renderAddressInfo(

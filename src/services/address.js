@@ -28,9 +28,7 @@ export const addressAddNew = async (address) => {
             throw new Error('Error occurred while adding address, please try again');
         }
     } catch (error) {
-        console.log('error:', error.response);
-        console.log('error:', JSON.parse(JSON.stringify(error)));
-        console.error('addWishlistItem:', error?.response?.data?.error || error?.response?.data?.message || error?.message)
+        console.error('addressAddNew:', error?.response?.data?.error || error?.response?.data?.message || error?.message)
         fetchNotification({
             type: 'error',
             message: 'Error occurred while adding address, please try again'
@@ -41,18 +39,17 @@ export const addressAddNew = async (address) => {
 
 export const removeAddress = async (addressId) => {
     try {
-        const { status, data: { address } } = await baseUrl.delete(`user/wishlist/${addressId}`);
+        const { status, data: { address } } = await baseUrl.delete(`user/address/${addressId}`);
         if(status === 200){
             return address;
         } else {
-            throw new Error('Error occurred while removing wishlst, please try again');
+            throw new Error('Error occurred while removing address, please try again');
         }
     } catch (error) {
-        console.log('error:', JSON.parse(JSON.stringify(error)));
-        console.error('removeWishlistItem:', error?.response?.data?.error || error?.response?.data?.message || error?.message)
+        console.error('removeAddress:', error?.response?.data?.error || error?.response?.data?.message || error?.message)
         fetchNotification({
             type: 'error',
-            message: 'Error occurred while removing wishlst, please try again'
+            message: 'Error occurred while removing address, please try again'
         });
         return false;
     }

@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { v4 as uuid } from "uuid";
 
 export const AddressForm = ({ addAddress, edit }) => {
     const [address, setAddress] = useState({
@@ -26,7 +25,6 @@ export const AddressForm = ({ addAddress, edit }) => {
     const addDummyAddress = (e) => {
         e.preventDefault();
         const addressObj = {
-            id: uuid(),
             name: 'Naveen ram',
             phoneNum: '7418887397',
             country: 'India',
