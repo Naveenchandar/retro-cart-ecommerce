@@ -13,9 +13,11 @@ export const Address = () => {
     const [showAddressForm, setShowAddressForm] = useState(false);
     const [editAddressForm, setEditAddressForm] = useState('');
     const [deliverySelected, setIsDeliverySelected] = useState(false);
+
     const setLocalStorage = useSetLocalStorage('retro-cart-address');
     const getLocalStorage = useGetLocalStorage('retro-cart-address');
     const [addressList, setAddressList] = useState(getLocalStorage('retro-cart-address') || []);
+
     const navigate = useNavigate();
     const { width, height } = useWindowSize()
 
@@ -49,12 +51,17 @@ export const Address = () => {
 
     useEffect(() => {
         setLocalStorage('retro-cart-address', addressList, false);
-        return () => {
-            setIsDeliverySelected(false);
-            setEditAddressForm(false);
-            setShowAddressForm(false);
-        }
     }, [addressList, setLocalStorage])
+
+    useEffect(() => {
+        return () => {
+            return () => {
+                setIsDeliverySelected(false);
+                setEditAddressForm(false);
+                setShowAddressForm(false);
+            }
+        }
+    }, [])
 
     const renderAddressInfo = (label, info) => (
         label?.map((item, index) => (
@@ -74,13 +81,18 @@ export const Address = () => {
         }, 5000)
     }
 
+    const addNewAddress = () => {
+        setShowAddressForm(!showAddressForm);
+        setEditAddressForm('');
+    }
+
     if (!deliverySelected) {
         return (
             <section className='flex align_center flex_dcolumn address_section'>
                 <h4 className='text_center'>Manage Address</h4>
                 <button
                     className='btn btn_primary font_bold text_uppercase text_center'
-                    onClick={() => { setShowAddressForm(!showAddressForm); setEditAddressForm(''); }}
+                    onClick={addNewAddress}
                 >
                     Add new address
                 </button>
@@ -113,8 +125,7 @@ export const Address = () => {
                             )
                         })}
                     </section>
-                ) : <p className='text_center'>
-                    {showAddressForm ? '' : 'No Address to add. Please add new address to proceed'}</p>
+                ) : <p className='text_center'>{showAddressForm ? '' : 'No Address to add. Please add new address to proceed'}</p>
                 }
             </section>
         )
