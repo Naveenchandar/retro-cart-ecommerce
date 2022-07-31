@@ -2,11 +2,11 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Login } from '../../components';
-import { useAuth } from '../../context';
-import { useDocumentTitle } from '../../hooks/useDocumentTitle';
-import { useSetLocalStorage } from '../../hooks/useLocalStorage';
-import { fetchNotification } from '../../utils';
+import { Login } from 'components';
+import { useAuth } from 'context';
+import { useDocumentTitle } from 'hooks/useDocumentTitle';
+import { useSetLocalStorage } from 'hooks/useLocalStorage';
+import { fetchNotification } from 'utils';
 
 export const LoginPage = () => {
     const [info, setUserInfo] = useState({

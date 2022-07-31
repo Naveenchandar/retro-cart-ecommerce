@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './index.css';
-import FreeShippingIcon from '../../assets/images/free.svg';
-import DeliveryIcon from '../../assets/images/delivery.svg';
-import QualityIcon from '../../assets/images/quality.svg';
-import NewArrivalsImage from '../../assets/images/image_1.png';
-import { Categories, Footer } from '../../components';
+import FreeShippingIcon from 'assets/images/free.svg';
+import DeliveryIcon from 'assets/images/delivery.svg';
+import QualityIcon from 'assets/images/quality.svg';
+import NewArrivalsImage from 'assets/images/image_1.png';
+import { Categories, Footer } from 'components';
 import { NewArrivals } from './NewArrivals';
 
 export const Home = () => {

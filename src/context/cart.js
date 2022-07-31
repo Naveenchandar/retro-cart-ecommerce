@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useProducts } from ".";
-import { productQuantityDecrement, productQuantityIncrement } from "../utils";
+import { fetchItemById, productQuantityDecrement, productQuantityIncrement } from "utils";
 import { useWishlist } from "./wishlist";
 
 const CartContext = createContext([]);
@@ -15,7 +15,7 @@ const fetchCartItems = () => {
 
 const CartProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState(fetchCartItems());
-    const { productState: { products } } = useProducts();
+    const { productState: { products }, productDispatch } = useProducts();
 
     const { addToWishlist } = useWishlist();
 
@@ -28,12 +28,24 @@ const CartProvider = ({ children }) => {
         removeFromCart(product.id);
     }
 
+    const updateProductsQuanitity = (data, productId) => {
+        return data.map(item => item.id === productId ? fetchItemById(productId, data) : item)
+    }
+
     const quantityAdd = (addProductId, addProductPrice, addProductQuantity) => {
         const productObj = {
             id: addProductId, price: addProductPrice, quantity: addProductQuantity, data: products
         }
-        productQuantityIncrement(productObj);
-        const filterProduct = productQuantityIncrement({ ...productObj, data: cartItems })
+        const filterProduct = productQuantityIncrement({ ...productObj, data: cartItems });
+        const newProducts = updateProductsQuanitity(products, addProductId);
+        productDispatch({
+            type: 'FETCH_PRODUCTS_SUCCESS',
+            payload: {
+                products: newProducts,
+                error: null,
+                loading: false
+            }
+        });
         setCartItems(filterProduct);
     }
 
@@ -41,18 +53,24 @@ const CartProvider = ({ children }) => {
         if (quantity === 1) {
             removeFromCart(id);
         } else {
-            const productObj = { id, price, quantity, data: products, removeFromCart };
-            setCartItems(productQuantityDecrement({ ...productObj, data: cartItems }));
+            const productObj = { id, price, quantity: quantity - 1, data: products, removeFromCart };
+            const filterProducts = productQuantityDecrement({ ...productObj, data: cartItems });
+            const newProducts = updateProductsQuanitity(products, id);
+            productDispatch({
+                type: 'FETCH_PRODUCTS_SUCCESS',
+                payload: {
+                    products: newProducts,
+                    error: null,
+                    loading: false
+                }
+            });
+            setCartItems(filterProducts);
         }
     }
 
-    const addToCart = ({ id, image, productName, price, oldPrice, rating, discount, quantity }) => {
-        setCartItems([
-            ...cartItems,
-            {
-                id, image, productName, price, oldPrice, rating, discount, quantity
-            }
-        ])
+    const addToCart = (product) => {
+        product.quantity = 1;
+        setCartItems([...cartItems, product]);
     }
 
     const removeFromCart = (id) => {

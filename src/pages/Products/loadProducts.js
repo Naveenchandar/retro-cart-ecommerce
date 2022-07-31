@@ -1,4 +1,4 @@
-import { useProductFilter } from '../../context';
+import { useProductFilter } from 'context';
 
 export const LoadProducts = (productsList) => {
 

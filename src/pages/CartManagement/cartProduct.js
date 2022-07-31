@@ -1,4 +1,4 @@
-import { ProductQuantity } from '../../components';
+import { ProductQuantity } from 'components';
 
 export const CartProduct = ({ product: { id, image, productName, price, oldPrice, discount, quantity }, product, quantityAdd,
     quantityRemove, removeFromCart, moveToWishList, addQuantity }) => {

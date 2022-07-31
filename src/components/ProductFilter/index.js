@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { useProductFilter } from '../../context';
+import { useProductFilter } from 'context';
 
 export const ProductFilter = () => {
     const { state: { price, categories, ratings, sortBy }, dispatch } = useProductFilter();
