@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { useDocumentTitle } from 'hooks/useDocumentTitle';
 import { PasswordInput, TextInput } from './input';
+import { signupService } from 'services/auth';
 
 export const SignUp = () => {
     const [info, setUserInfo] = useState({
@@ -68,13 +68,10 @@ export const SignUp = () => {
     const handleSignup = async (event) => {
         event.preventDefault();
         try {
-            if (handleValidation()) {
-                const { status, data: { createdUser, encodedToken } } = await axios.post("/api/auth/signup", info)
-                if (status === 201 && createdUser?.id && encodedToken) {
-                    navigate('/login');
-                } else {
-                    throw new Error('Email or Password is incorrect');
-                }
+            if (handleValidation() && await signupService(info)) {
+                navigate('/login');
+            } else {
+                throw new Error('Email or Password is incorrect');
             }
         } catch (error) {
             setErrorInfo({ error: error?.response?.data?.errors?.[0] || error?.message || error || 'Something went wrong, Please try again.' });

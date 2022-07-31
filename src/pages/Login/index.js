@@ -1,12 +1,8 @@
-import axios from 'axios';
 import { useState, useEffect } from 'react';
-import toast from 'react-hot-toast';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Login } from 'components';
 import { useAuth } from 'context';
 import { useDocumentTitle } from 'hooks/useDocumentTitle';
-import { useSetLocalStorage } from 'hooks/useLocalStorage';
-import { fetchNotification } from 'utils';
 import { loginService } from 'services/auth';
 
 export const LoginPage = () => {
@@ -20,7 +16,6 @@ export const LoginPage = () => {
     const [loading, setIsLoading] = useState(false);
 
     const { updateUser } = useAuth();
-    const setLocalStorage = useSetLocalStorage("name", "Bob");
 
     const navigate = useNavigate();
     const location = useLocation();
