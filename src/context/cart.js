@@ -2,30 +2,35 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useProducts } from ".";
 import { fetchItemById, productQuantityDecrement, productQuantityIncrement } from "utils";
 import { useWishlist } from "./wishlist";
+import { addCartItem, fetchCartItems, removeCartItem } from "services/cart";
 
 const CartContext = createContext([]);
 
-const fetchCartItems = () => {
-    const cartItems = localStorage.getItem("retro-cart");
-    if (JSON.parse(cartItems)?.length) {
-        return JSON.parse(cartItems);
-    }
-    return [];
-}
+// const fetchCartItems = () => {
+//     const cartItems = localStorage.getItem("retro-cart");
+//     if (JSON.parse(cartItems)?.length) {
+//         return JSON.parse(cartItems);
+//     }
+//     return [];
+// }
 
 const CartProvider = ({ children }) => {
-    const [cartItems, setCartItems] = useState(fetchCartItems());
+    const [cartItems, setCartItems] = useState([]);
     const { productState: { products }, productDispatch } = useProducts();
 
     const { addToWishlist } = useWishlist();
 
     useEffect(() => {
-        localStorage.setItem("retro-cart", JSON.stringify(cartItems));
+        (async () => {
+            const cart = await fetchCartItems();
+            setCartItems(cart);
+        })();
+        // localStorage.setItem("retro-cart", JSON.stringify(cartItems));
     }, [cartItems]);
 
     const moveToWishList = (product) => {
         addToWishlist(product);
-        removeFromCart(product.id);
+        removeFromCart(product._id);
     }
 
     const updateProductsQuanitity = (data, productId) => {
@@ -68,14 +73,22 @@ const CartProvider = ({ children }) => {
         }
     }
 
-    const addToCart = (product) => {
-        product.quantity = 1;
-        setCartItems([...cartItems, product]);
+    const addToCart = async (product) => {
+        // product.quantity = 1;
+        // setCartItems([...cartItems, product]);
+        const data = await addCartItem(product);
+        if (data) {
+            setCartItems(data);
+        }
     }
 
-    const removeFromCart = (id) => {
-        const removeProduct = cartItems.filter(item => item.id !== id);
-        setCartItems(removeProduct);
+    const removeFromCart = async (id) => {
+        // const removeProduct = cartItems.filter(item => item.id !== id);
+        // setCartItems(removeProduct);
+        const data = await removeCartItem(id);
+        if (data) {
+            setCartItems(data);
+        }
     }
 
     return (

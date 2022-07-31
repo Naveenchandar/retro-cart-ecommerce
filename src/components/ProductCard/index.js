@@ -1,6 +1,5 @@
 import { useCart, useWishlist } from 'context';
 import { ProductQuantity } from 'components/ProductQuantity';
-import { isProductAddedInWishlist } from 'utils';
 
 export const ProductCard = ({ product }) => {
     const { image, alt, productName, discount, price, oldPrice, rating, id, quantity, _id } = product;
@@ -45,7 +44,7 @@ export const ProductCard = ({ product }) => {
                 </div>
                 {findCartProduct ?
                     <div className='flex justify_center'>
-                        <button className="product_remove_cart btn btn_primary p-2" onClick={() => removeFromCart(id)}>
+                        <button className="product_remove_cart btn btn_primary p-2" onClick={() => removeFromCart(_id)}>
                             Remove from cart
                         </button>
                         <ProductQuantity

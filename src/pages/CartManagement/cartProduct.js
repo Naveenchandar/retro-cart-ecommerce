@@ -1,7 +1,8 @@
 import { ProductQuantity } from 'components';
 
-export const CartProduct = ({ product: { id, image, productName, price, oldPrice, discount, quantity }, product, quantityAdd,
-    quantityRemove, removeFromCart, moveToWishList, addQuantity }) => {
+export const CartProduct = ({ product:
+    { id, image, productName, price, oldPrice, discount, quantity, _id: productId },
+    product, quantityAdd, quantityRemove, removeFromCart, moveToWishList, addQuantity }) => {
     return (
         <section className="cart_list my-2" key={id}>
             <div className="cart_item border flex_row cart_gap justify_spacebtw">
@@ -21,7 +22,7 @@ export const CartProduct = ({ product: { id, image, productName, price, oldPrice
                         quantity={quantity}
                     />
                     <div className="cart_btns flex flex_dcolumn w-100">
-                        <button className="btn btn_outlined w-100" onClick={() => removeFromCart(id)}>Remove from cart</button>
+                        <button className="btn btn_outlined w-100" onClick={() => removeFromCart(productId)}>Remove from cart</button>
                         <button className="btn btn_primary w-100" onClick={() => moveToWishList(product)}>
                             Move to wishlist
                         </button>
