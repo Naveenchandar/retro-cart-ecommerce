@@ -2,31 +2,33 @@ import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast';
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import Confetti from 'react-confetti';
-import { useGetLocalStorage, useSetLocalStorage } from 'hooks/useLocalStorage';
+// import { useGetLocalStorage, useSetLocalStorage } from 'hooks/useLocalStorage';
 import { fetchItemById, updateItemById } from 'utils';
 import { AddressForm } from './form';
 import './index.css';
 import { useNavigate } from 'react-router-dom';
 import { useWindowSize } from 'hooks/useWindowSize';
+import { addressAddNew } from 'services/address';
 
 export const Address = () => {
     const [showAddressForm, setShowAddressForm] = useState(false);
     const [editAddressForm, setEditAddressForm] = useState('');
     const [deliverySelected, setIsDeliverySelected] = useState(false);
 
-    const setLocalStorage = useSetLocalStorage('retro-cart-address');
-    const getLocalStorage = useGetLocalStorage('retro-cart-address');
-    const [addressList, setAddressList] = useState(getLocalStorage('retro-cart-address') || []);
+    // const setLocalStorage = useSetLocalStorage('retro-cart-address');
+    // const getLocalStorage = useGetLocalStorage('retro-cart-address');
+    const [addressList, setAddressList] = useState([]);
 
     const navigate = useNavigate();
     const { width, height } = useWindowSize()
 
-    const addAddress = (address) => {
+    const addAddress = async (address) => {
         if (editAddressForm) {
             updateAddress(address);
         } else {
             try {
-                setAddressList([...addressList, address]);
+                const addresses = await addressAddNew(address);
+                setAddressList(addresses);
                 setShowAddressForm(!showAddressForm)
             } catch (error) {
                 toast.error(error?.message);
@@ -35,7 +37,7 @@ export const Address = () => {
     }
 
     const editAddress = (addressId) => {
-        const findAddress = addressList?.find(({ id }) => id === addressId);
+        const findAddress = addressList?.find(({ _id }) => _id === addressId);
         setEditAddressForm(findAddress);
         setShowAddressForm(true);
     }
@@ -49,9 +51,9 @@ export const Address = () => {
         }
     }
 
-    useEffect(() => {
-        setLocalStorage('retro-cart-address', addressList, false);
-    }, [addressList, setLocalStorage])
+    // useEffect(() => {
+    //     setLocalStorage('retro-cart-address', addressList, false);
+    // }, [addressList, setLocalStorage])
 
     useEffect(() => {
         return () => {
@@ -99,16 +101,16 @@ export const Address = () => {
                 {showAddressForm && <AddressForm addAddress={addAddress} edit={editAddressForm} />}
                 {addressList?.length ? (
                     <section className='flex border address_list'>
-                        {addressList?.map(({ id, name, phoneNum, country, state, landmark, fullAddress, pincode }) => {
+                        {addressList?.map(({ _id, name, phoneNum, country, state, landmark, fullAddress, pincode }) => {
                             return (
-                                <section key={id} className='border address_list_item'>
+                                <section key={_id} className='border address_list_item'>
                                     <h4 className='flex'>
                                         <span title={name}>Name: {name}</span>
                                         <div className='address_icons'>
                                             <AiOutlineEdit
                                                 className='pointer'
                                                 title='Edit Address'
-                                                onClick={() => editAddress(id)}
+                                                onClick={() => editAddress(_id)}
                                             /> &nbsp;
                                             <AiOutlineDelete className='pointer' title='Delete Address' />
                                         </div>

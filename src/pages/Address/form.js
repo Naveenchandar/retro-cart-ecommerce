@@ -84,6 +84,7 @@ export const AddressForm = ({ addAddress, edit }) => {
     }
 
     const addressFieldChange = (type, targetValue) => {
+        setErrorInfo('');
         setAddress({ ...address, [type]: targetValue })
     }
 
@@ -146,7 +147,7 @@ export const AddressForm = ({ addAddress, edit }) => {
                             placeholder="Enter your pincode"
                             value={pincode}
                             id="zipcode"
-                            onChange={(e) => addressFieldChange('pinCode', e.target.value)}
+                            onChange={(e) => addressFieldChange('pincode', e.target.value)}
                         />
                         {errorPincode && <span className='red'>{errorPincode}</span>}
                     </label>
