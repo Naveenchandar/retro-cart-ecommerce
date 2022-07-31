@@ -1,19 +1,20 @@
 import { useCart, useWishlist } from 'context';
 import { ProductQuantity } from 'components/ProductQuantity';
+import { isProductAddedInWishlist } from 'utils';
 
 export const ProductCard = ({ product }) => {
-    const { image, alt, productName, discount, price, oldPrice, rating, id, quantity } = product;
+    const { image, alt, productName, discount, price, oldPrice, rating, id, quantity, _id } = product;
 
-    const { addToWishlist, addedToWishList } = useWishlist();
+    const { addToWishlist, wishlistItems } = useWishlist();
 
     const { cartItems, addToCart, removeFromCart } = useCart();
-    const findCartProduct = cartItems.find(item => item.id === id);
+    const findCartProduct = cartItems.find(item => item._id === _id);
 
     return (
         <div className="ecommerce_card flex_column product_item">
             <div className="product_image w-100 my-1">
                 <img src={image} className="w-100 block m_auto" alt={alt} />
-                {addedToWishList.find(item => item.id === id) ?
+                {wishlistItems.find(item => item._id === _id) ?
                     <i
                         className='fa fa-heart product_wishlist pointer'
                         style={{ color: 'red' }}

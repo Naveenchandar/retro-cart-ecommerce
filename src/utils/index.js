@@ -1,9 +1,5 @@
-import axios from 'axios';
-import toast from 'react-hot-toast';
 
-export const mockApi = axios.create({
-    baseURL: "https://jsonplaceholder.typicode.com/posts"
-});
+import toast from 'react-hot-toast';
 
 export const fetchNotification = ({ type, message }) => toast[type](message);
 
@@ -40,3 +36,7 @@ export const productQuantityDecrement = ({ id, price, quantity, data, removeFrom
         return item;
     });
 }
+
+export const isProductAddedInWishlist = (productId, products) => {
+    return products.some(({ _id }) => _id === productId);
+};

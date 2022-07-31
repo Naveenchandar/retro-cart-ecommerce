@@ -17,7 +17,7 @@ export const NavBar = () => {
         updateUser(null);
         fetchNotification({ type: 'success', message: 'Successfully logged out' });
     }
-    const { addedToWishList } = useWishlist();
+    const { wishlistItems } = useWishlist();
     const { cartItems } = useCart();
     const { ref, isComponentVisible } = useComponentVisible(true);
     const [isLogoutVisible, setIsLogoutVisible] = useState(false);
@@ -35,7 +35,7 @@ export const NavBar = () => {
                             aria-label="Wishlist">
                             <i className="fa fa-heart-o"></i>
                             <span className="badge badge_number">
-                                <span>{addedToWishList.length}</span>
+                                <span>{wishlistItems.length}</span>
                             </span>
                         </Link>
                         <Link to="/cart" className="badge_container" title="Cart Management"
