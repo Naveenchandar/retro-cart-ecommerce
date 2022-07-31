@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import './index.css';
 import FreeShippingIcon from 'assets/images/free.svg';
 import DeliveryIcon from 'assets/images/delivery.svg';
@@ -8,21 +7,24 @@ import QualityIcon from 'assets/images/quality.svg';
 import NewArrivalsImage from 'assets/images/image_1.png';
 import { Categories, Footer } from 'components';
 import { NewArrivals } from './NewArrivals';
+import { fetchCategories } from 'services/categories';
 
 export const Home = () => {
     const [categories, setCategories] = useState([]);
+    const [error, setError] = useState('');
 
     useEffect(() => {
         (async () => {
             try {
-                const { status, data: { categories = [] } } = await axios.get('/api/categories');
-                if (status === 200) {
+                const categories = await fetchCategories();
+                if (categories) {
                     setCategories(categories);
                 } else {
-                    throw new Error('Unable to fetch categories, Please try again');
+                    throw new Error('Something went wrong while loading categories, Please try again');
                 }
             } catch (error) {
-                console.warn('error:', error)
+                console.error('home screen:', error.message)
+                setError(error.message)
             }
         })();
     }, [])
@@ -120,7 +122,18 @@ export const Home = () => {
                         <h2> Our products </h2>
                     </div>
                     <div className="section_row flex flex_wrap">
-                        <Categories categories={categories} />
+                        {categories?.length && Array.isArray(categories) && !error ? (
+                            <Categories categories={categories} />
+                        ) : (
+                            <div className='flex_row'>
+                                <span>{error}</span> &nbsp;
+                                <button
+                                    className="login_btn btn btn_primary"
+                                    onClick={async () => { await fetchCategories(); }}
+                                >Refresh</button>
+                            </div>
+                        )
+                        }
                     </div>
                 </div>
             </section>
