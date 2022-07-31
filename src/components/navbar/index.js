@@ -9,11 +9,11 @@ import { fetchNotification } from 'utils';
 
 export const NavBar = () => {
     const { user, updateUser } = useAuth();
-    const removeStorage = useRemoveLocalStorage('retro-token');
+    const removeStorage = useRemoveLocalStorage('retro-cart-token');
     const navigate = useNavigate();
     const handleLogout = () => {
         navigate('/login');
-        removeStorage('retro-token');
+        removeStorage('retro-cart-token');
         updateUser(null);
         fetchNotification({ type: 'success', message: 'Successfully logged out' });
     }

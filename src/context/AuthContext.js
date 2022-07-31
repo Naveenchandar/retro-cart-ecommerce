@@ -7,16 +7,16 @@ const AuthContextProvider = ({ children }) => {
     const getStorage = useGetLocalStorage();
 
     const [user, setUser] = useState(() => {
-        if (getStorage('retro-token', true)?.firstName) {
-            return getStorage('retro-token', true)
+        if (getStorage('retro-cart-token', true)?.firstName) {
+            return getStorage('retro-cart-token', true)
         }
         return null;
     });
 
     const updateUser = (user) => {
         if (!user?.firstName) {
-            if (getStorage('retro-token', true)?.firstName) {
-                setUser(getStorage('retro-token', true))
+            if (getStorage('retro-cart-token', true)?.firstName) {
+                setUser(getStorage('retro-cart-token', true))
             } else {
                 setUser(null)
             }

@@ -33,8 +33,13 @@ export const SignUp = () => {
 
     const handleValidation = () => {
         const { email, password, firstName, lastName, confirmPwd } = info;
+        const isValidEmail = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/.test(email);
         if (!email) {
             setErrorInfo({ ...errorInfo, email: 'Please enter email id' });
+            return false;
+        }
+        if (!isValidEmail) {
+            setErrorInfo({ ...errorInfo, email: 'Please enter valid email id' });
             return false;
         }
         if (!password) {
@@ -86,7 +91,7 @@ export const SignUp = () => {
                         </div>
                         <TextInput
                             handleInputChange={handleInputChange}
-                            errorInfo={errorInfo}
+                            errorInfo={errorInfo?.email}
                             data={{
                                 label: 'Email address',
                                 placeholder: 'abc@gmail.com',
@@ -97,7 +102,7 @@ export const SignUp = () => {
                         />
                         <TextInput
                             handleInputChange={handleInputChange}
-                            errorInfo={errorInfo}
+                            errorInfo={errorInfo.firstName}
                             data={{
                                 label: 'First name',
                                 placeholder: 'first name',
@@ -108,7 +113,7 @@ export const SignUp = () => {
                         />
                         <TextInput
                             handleInputChange={handleInputChange}
-                            errorInfo={errorInfo}
+                            errorInfo={errorInfo.lastName}
                             data={{
                                 label: 'Last name',
                                 placeholder: 'last name',

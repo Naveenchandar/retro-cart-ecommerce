@@ -7,6 +7,7 @@ import { useAuth } from 'context';
 import { useDocumentTitle } from 'hooks/useDocumentTitle';
 import { useSetLocalStorage } from 'hooks/useLocalStorage';
 import { fetchNotification } from 'utils';
+import { loginService } from 'services/auth';
 
 export const LoginPage = () => {
     const [info, setUserInfo] = useState({
@@ -64,26 +65,34 @@ export const LoginPage = () => {
         return true;
     }
 
+    const isLoggedIn = async () => await loginService(info);
+
     const handleLogin = async (event) => {
         event.preventDefault();
         setIsLoading(true);
         try {
-            if (handleValidation()) {
-                const { status, data: { encodedToken } } = await axios.post("/api/auth/login", info)
-                if (status === 200 && encodedToken) {
-                    toast.success('logged in successfully');
-                    setLocalStorage("retro-token", encodedToken, true);
-                    updateUser();
-                    navigate(from ? from : '/', { replace: true });
-                } else {
-                    throw new Error('Email or Password is incorrect');
-                }
+            if (handleValidation() && await isLoggedIn(info)) {
+                updateUser();
+                navigate(from ? from : '/', { replace: true });
             }
         } catch (error) {
-            fetchNotification({ type: 'error', message: 'Email or Password is incorrect' });
             setErrorInfo({ error: 'Email or Password is incorrect' });
         }
         setIsLoading(false);
+    }
+
+    const handleTestLogin = async () => {
+        setUserInfo({
+            email: "naveen@gmail.com",
+            password: "naveen",
+            username: "naveenram"
+        });
+        updateUser({
+            email: "naveen@gmail.com",
+            password: "naveen",
+            firstName: "Naveen",
+            lastName: "Ram"
+        })
     }
 
     return (
@@ -94,21 +103,7 @@ export const LoginPage = () => {
             errorInfo={errorInfo}
             togglePassword={() => setShowPassword((showPassword) => !showPassword)}
             showPassword={showPassword}
-            handleTestLogin={() => {
-                setUserInfo({
-                    email: "adarshbalika@gmail.com",
-                    password: "adarshbalika",
-                    username: "adarshbalika"
-                });
-                updateUser({
-                    email: "adarshbalika@gmail.com",
-                    password: "adarshbalika",
-                    firstName: "Adarsh",
-                    lastName: "Balika"
-                })
-                fetchNotification({ type: 'success', message: 'Welcome adarshbalika' });
-                navigate(from ? from : '/', { replace: true });
-            }}
+            handleTestLogin={handleTestLogin}
             loading={loading}
         />
     )

@@ -38,7 +38,7 @@ export const TextInput = ({ handleInputChange, errorInfo, data }) => {
                     required
                 />
             </div>
-            {errorInfo.email && <p className='input_errormsg'>{errorInfo.email}</p>}
+            {errorInfo && <p className='input_errormsg'>{errorInfo}</p>}
         </div>
     )
 }
