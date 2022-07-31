@@ -12,9 +12,9 @@ export const AddressForm = ({ addAddress, edit }) => {
     useEffect(() => {
         formRef?.current?.scrollIntoView();
         if (edit) {
-            const { name, phoneNum, country, state, landmark, pincode, fullAddress } = edit;
+            const { name, phoneNum, country, state, landmark, pincode, fullAddress, _id } = edit;
             setAddress({
-                name, phoneNum, country, state, landmark, pincode, fullAddress
+                name, phoneNum, country, state, landmark, pincode, fullAddress, _id
             })
         }
     }, [edit])

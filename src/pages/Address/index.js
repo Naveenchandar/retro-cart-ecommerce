@@ -8,7 +8,7 @@ import { AddressForm } from './form';
 import './index.css';
 import { useNavigate } from 'react-router-dom';
 import { useWindowSize } from 'hooks/useWindowSize';
-import { addressAddNew, removeAddress } from 'services/address';
+import { addressAddNew, addressUpdate, removeAddress } from 'services/address';
 
 export const Address = () => {
     const [showAddressForm, setShowAddressForm] = useState(false);
@@ -42,13 +42,16 @@ export const Address = () => {
         setShowAddressForm(true);
     }
 
-    const updateAddress = (addressData) => {
-        const addressInfo = { ...addressData, id: editAddressForm?.id };
-        const data = fetchItemById(addressInfo?.id, addressList);
-        if (data?.id) {
-            setAddressList(updateItemById(addressList, addressInfo));
-            setShowAddressForm(false);
-        }
+    const updateAddress = async (addressData) => {
+        // const addressInfo = { ...addressData, id: editAddressForm?.id };
+        // const data = fetchItemById(addressInfo?.id, addressList);
+        // if (data?.id) {
+        //     setAddressList(updateItemById(addressList, addressInfo));
+        //     setShowAddressForm(false);
+        // }
+        const updateAddresses = await addressUpdate(addressData);
+        setAddressList(updateAddresses);
+        setShowAddressForm(false);
     }
 
     // useEffect(() => {

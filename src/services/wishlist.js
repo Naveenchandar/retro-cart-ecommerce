@@ -46,7 +46,6 @@ export const removeWishlistItem = async (product) => {
             throw new Error('Error occurred while removing wishlst, please try again');
         }
     } catch (error) {
-        console.log('error:', JSON.parse(JSON.stringify(error)));
         console.error('removeWishlistItem:', error?.response?.data?.error || error?.response?.data?.message || error?.message)
         fetchNotification({
             type: 'error',

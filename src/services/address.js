@@ -23,7 +23,8 @@ export const addressAddNew = async (address) => {
     try {
         const { status, data: { address: addresses } } = await baseUrl.post('user/address', { address });
         if (status === 201) {
-            return addresses
+            fetchNotification({ type: 'success', message: 'Address added successfully' });
+            return addresses;
         } else {
             throw new Error('Error occurred while adding address, please try again');
         }
@@ -40,13 +41,33 @@ export const addressAddNew = async (address) => {
 export const removeAddress = async (addressId) => {
     try {
         const { status, data: { address } } = await baseUrl.delete(`user/address/${addressId}`);
-        if(status === 200){
+        if (status === 200) {
+            fetchNotification({ type: 'success', message: 'Address removed successfully' });
             return address;
         } else {
             throw new Error('Error occurred while removing address, please try again');
         }
     } catch (error) {
         console.error('removeAddress:', error?.response?.data?.error || error?.response?.data?.message || error?.message)
+        fetchNotification({
+            type: 'error',
+            message: 'Error occurred while removing address, please try again'
+        });
+        return false;
+    }
+}
+
+export const addressUpdate = async (address) => {
+    try {
+        const { status, data: { address: address1 } } = await baseUrl.post(`user/address/edit/${address._id}`, { address });
+        if (status === 200) {
+            fetchNotification({ type: 'success', message: 'Address updated successfully' });
+            return address1;
+        } else {
+            throw new Error('Error occurred while removing address, please try again');
+        }
+    } catch (error) {
+        console.error('updateAddress:', error?.response?.data?.error || error?.response?.data?.message || error?.message)
         fetchNotification({
             type: 'error',
             message: 'Error occurred while removing address, please try again'

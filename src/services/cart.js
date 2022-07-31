@@ -46,7 +46,6 @@ export const removeCartItem = async (productId) => {
             throw new Error('Error occurred while removing cart, please try again');
         }
     } catch (error) {
-        console.log('error:', JSON.parse(JSON.stringify(error)));
         console.error('removeCartItem:', error?.response?.data?.error || error?.response?.data?.message || error?.message)
         fetchNotification({
             type: 'error',
@@ -65,8 +64,7 @@ export const updateCartItemQuantity = async (productId, type) => {
             throw new Error('Error occurred while updating cart item, please try again')
         }
     } catch (error) {
-        console.log('error:', JSON.parse(JSON.stringify(error)));
-        console.error('removeCartItem:', error?.response?.data?.error || error?.response?.data?.message || error?.message)
+        console.error('updateCartItemQuantity:', error?.response?.data?.error || error?.response?.data?.message || error?.message)
         fetchNotification({
             type: 'error',
             message: 'Error occurred while updating cart item, please try again'
