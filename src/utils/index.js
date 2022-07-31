@@ -37,6 +37,9 @@ export const productQuantityDecrement = ({ id, price, quantity, data, removeFrom
     });
 }
 
-export const isProductAddedInWishlist = (productId, products) => {
-    return products.some(({ _id }) => _id === productId);
-};
+export const fetchTotalAmount = (data) => {
+    const amount = data.reduce((a, b) => {
+        return a + parseInt(b.qty * b.price)
+    }, 0);
+    return(Number.isNaN(amount) ? 0 + 41 : amount + 41);
+}

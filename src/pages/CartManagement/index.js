@@ -3,19 +3,13 @@ import { useCart } from 'context';
 import { useDocumentTitle } from 'hooks/useDocumentTitle';
 import { CartProduct } from './cartProduct';
 import './index.css';
+import { fetchTotalAmount } from 'utils';
 
 export const CartManagement = () => {
 
     const { cartItems, quantityAdd, quantityRemove, addQuantity, removeFromCart, moveToWishList } = useCart();
 
     useDocumentTitle('Retro Cart | Cart Management')
-
-    const addTotalAmount = () => {
-        const amount = cartItems.reduce((a, b) => {
-            return a + parseInt(b.qty * b.price)
-        }, 0);
-        return Number.isNaN(amount) ? 0 : amount;
-    }
 
     if (cartItems?.length > 0) {
         return (
@@ -57,11 +51,11 @@ export const CartManagement = () => {
                                 </li>
                                 <li className="flex justify_spacebtw">
                                     <span>Deliver charges</span>
-                                    <span><i className='fa fa-rupee'></i>&nbsp;50</span>
+                                    <span><i className='fa fa-rupee'></i>&nbsp;41</span>
                                 </li>
                             </ul>
                             <h5 className="font_bold flex justify_spacebtw total_amt">
-                                Total Amount <span><i className='fa fa-rupee'></i> {addTotalAmount() + 50} </span>
+                                Total Amount <span><i className='fa fa-rupee'></i> {fetchTotalAmount(cartItems)} </span>
                             </h5>
                             <button className="btn btn_primary font_bold text_uppercase w-100">
                                 <Link to="/address">Proceed to checkout</Link>

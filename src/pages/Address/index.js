@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
+// import { v4 as uuid } from "uuid";
 import toast from 'react-hot-toast';
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import Confetti from 'react-confetti';
@@ -9,11 +10,33 @@ import './index.css';
 import { useNavigate } from 'react-router-dom';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { addressAddNew, addressUpdate, removeAddress } from 'services/address';
+import { useAuth, useCart } from 'context';
+import { fetchTotalAmount } from 'utils';
+import { clearAllCartItems } from 'services/cart';
+
+const RAZORPAY_URL = "https://checkout.razorpay.com/v1/checkout.js";
+
+const handleLoadScript = (src) => {
+    return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = src;
+        script.onload = () => {
+            resolve(true);
+        };
+        script.onerror = () => {
+            reject(false);
+        };
+        document.body.appendChild(script);
+    });
+};
 
 export const Address = () => {
+    const { cartItems, setCartItems } = useCart();
+    const { user } = useAuth();
     const [showAddressForm, setShowAddressForm] = useState(false);
     const [editAddressForm, setEditAddressForm] = useState('');
     const [deliverySelected, setIsDeliverySelected] = useState(false);
+    // const [isOngoingNetworkCall, setIsOngoingNetworkCall] = useState(false);
 
     // const setLocalStorage = useSetLocalStorage('retro-cart-address');
     // const getLocalStorage = useGetLocalStorage('retro-cart-address');
@@ -84,6 +107,55 @@ export const Address = () => {
         }, 5000)
     }
 
+    const placeOrder = async (order) => {
+        try {
+            console.error("Placed order successfully!", "success");
+            const data = await clearAllCartItems();
+            if (data) {
+                setCartItems([]);
+                deliveryClick();
+            }
+        } catch (error) {
+            console.error(error || error?.message);
+        }
+    };
+
+    const handleShowRazorPay = async (address) => {
+        const response = await handleLoadScript(RAZORPAY_URL);
+
+        if (!response) {
+            console.error(
+                "Could not load razorpay payment options. Please try again later."
+            );
+            return;
+        }
+
+        var options = {
+            key: process.env.REACT_APP_RAZORPAY_KEY,
+            amount: fetchTotalAmount(cartItems) * 100,
+            currency: "INR",
+            name: "Retro cart",
+            description: "Thank you for shopping!",
+
+            handler: async function (response) {
+                const { razorpay_payment_id } = await response;
+                const order = {
+                    razorpayPaymentId: razorpay_payment_id
+                    // ...checkoutData,
+                };
+                placeOrder(order);
+            },
+            prefill: {
+                name: address?.name,
+                email: user?.email,
+                contact: 7418887397,
+            },
+            theme: { color: "#3399cc" },
+        };
+        const paymentObject = new window.Razorpay(options);
+        paymentObject.open();
+    };
+
     const addNewAddress = () => {
         setShowAddressForm(!showAddressForm);
         setEditAddressForm('');
@@ -107,7 +179,8 @@ export const Address = () => {
                 {showAddressForm && <AddressForm addAddress={addAddress} edit={editAddressForm} />}
                 {addressList?.length ? (
                     <section className='flex border address_list'>
-                        {addressList?.map(({ _id, name, phoneNum, country, state, landmark, fullAddress, pincode }) => {
+                        {addressList?.map((address) => {
+                            const { _id, name, phoneNum, country, state, landmark, fullAddress, pincode } = address;
                             return (
                                 <section key={_id} className='border address_list_item'>
                                     <h4 className='flex'>
@@ -130,7 +203,7 @@ export const Address = () => {
                                     )}
                                     <button
                                         className='btn btn_primary font_bold text_uppercase'
-                                        onClick={deliveryClick}
+                                        onClick={() => handleShowRazorPay(address)}
                                     >Delivery here</button>
                                 </section>
                             )

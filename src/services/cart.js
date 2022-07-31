@@ -57,8 +57,8 @@ export const removeCartItem = async (productId) => {
 
 export const updateCartItemQuantity = async (productId, type) => {
     try {
-        const { status, data: {cart} } = await baseUrl.post(`user/cart/${productId}`, { action: { type } });
-        if(status === 200){
+        const { status, data: { cart } } = await baseUrl.post(`user/cart/${productId}`, { action: { type } });
+        if (status === 200) {
             return cart;
         } else {
             throw new Error('Error occurred while updating cart item, please try again')
@@ -68,6 +68,25 @@ export const updateCartItemQuantity = async (productId, type) => {
         fetchNotification({
             type: 'error',
             message: 'Error occurred while updating cart item, please try again'
+        });
+        return false;
+    }
+}
+
+export const clearAllCartItems = async () => {
+    try {
+        const { status, data: { cart } } = await baseUrl.get(`user/cart/clear`);
+        if (status === 201) {
+            fetchNotification({ type: 'success', message: 'Order placed successfully' });
+            return cart;
+        } else {
+            throw new Error('Error occurred while clearing cart item, please try again')
+        }
+    } catch (error) {
+        console.error('clearCartItems:', JSON.parse(JSON.stringify(error)));
+        fetchNotification({
+            type: 'error',
+            message: 'Error occurred while clearing cart item, please try again'
         });
         return false;
     }

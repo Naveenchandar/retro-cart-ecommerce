@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useProducts } from ".";
 import { useWishlist } from "./wishlist";
-import { addCartItem, fetchCartItems, removeCartItem, updateCartItemQuantity } from "services/cart";
+import { addCartItem, clearAllCartItems, fetchCartItems, removeCartItem, updateCartItemQuantity } from "services/cart";
 
 const CartContext = createContext([]);
 
@@ -26,6 +26,12 @@ const CartProvider = ({ children }) => {
         })();
         // localStorage.setItem("retro-cart", JSON.stringify(cartItems));
     }, [cartItems]);
+
+    useEffect(() => {
+        return () => {
+            setCartItems([]);
+        }
+    }, [])
 
     const moveToWishList = (product) => {
         addToWishlist(product);
@@ -133,7 +139,7 @@ const CartProvider = ({ children }) => {
     }
 
     return (
-        <CartContext.Provider value={{ addToCart, cartItems, removeFromCart, quantityAdd, quantityRemove, moveToWishList }}>
+        <CartContext.Provider value={{ addToCart, cartItems, removeFromCart, quantityAdd, quantityRemove, moveToWishList, setCartItems }}>
             {children}
         </CartContext.Provider>
     )

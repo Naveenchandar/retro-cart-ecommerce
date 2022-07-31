@@ -8,6 +8,7 @@ import {
   getCartItemsHandler,
   removeItemFromCartHandler,
   updateCartItemHandler,
+  clearCart
 } from "./backend/controllers/CartController";
 import {
   getAllCategoriesHandler,
@@ -26,11 +27,15 @@ import { categories } from "./backend/db/categories";
 import { products } from "./backend/db/products";
 import { users } from "./backend/db/users";
 import {
-	addNewAddressHandler,
-	editAddressHandler,
-	getAllAddressesHandler,
-	removeAddressHandler,
+  addNewAddressHandler,
+  editAddressHandler,
+  getAllAddressesHandler,
+  removeAddressHandler,
 } from "./backend/controllers/AddressController";
+import {
+  addItemToOrdersHandler,
+  getAllOrdersHandler,
+} from "./backend/controllers/OrderController";
 
 export function makeServer({ environment = "development" } = {}) {
   return new Server({
@@ -56,7 +61,7 @@ export function makeServer({ environment = "development" } = {}) {
       });
 
       users.forEach((item) =>
-        server.create("user", { ...item, cart: [], wishlist: [], address:[] })
+        server.create("user", { ...item, cart: [], wishlist: [], address: [], orders: [], })
       );
 
       categories.forEach((item) => server.create("category", { ...item }));
@@ -84,6 +89,7 @@ export function makeServer({ environment = "development" } = {}) {
         "/user/cart/:productId",
         removeItemFromCartHandler.bind(this)
       );
+      this.get("/user/cart/clear", clearCart.bind(this));
 
       // wishlist routes (private)
       this.get("/user/wishlist", getWishlistItemsHandler.bind(this));
@@ -93,16 +99,20 @@ export function makeServer({ environment = "development" } = {}) {
         removeItemFromWishlistHandler.bind(this)
       );
       // address management routes(private)
-			this.get("/user/addresses", getAllAddressesHandler.bind(this));
-			this.post("/user/address", addNewAddressHandler.bind(this));
-			this.post(
-				"/user/address/edit/:addressId",
-				editAddressHandler.bind(this)
-			);
-			this.delete(
-				"/user/address/:addressId",
-				removeAddressHandler.bind(this)
-			);
+      this.get("/user/addresses", getAllAddressesHandler.bind(this));
+      this.post("/user/address", addNewAddressHandler.bind(this));
+      this.post(
+        "/user/address/edit/:addressId",
+        editAddressHandler.bind(this)
+      );
+      this.delete(
+        "/user/address/:addressId",
+        removeAddressHandler.bind(this)
+      );
+
+      // orders routes(private)
+			this.get("/user/orders", getAllOrdersHandler.bind(this));
+			this.post("/user/order", addItemToOrdersHandler.bind(this));
     },
   });
 }
