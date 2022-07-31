@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useProducts } from ".";
-import { fetchItemById, productQuantityDecrement } from "utils";
 import { useWishlist } from "./wishlist";
 import { addCartItem, fetchCartItems, removeCartItem, updateCartItemQuantity } from "services/cart";
 
@@ -31,10 +30,6 @@ const CartProvider = ({ children }) => {
     const moveToWishList = (product) => {
         addToWishlist(product);
         removeFromCart(product._id);
-    }
-
-    const updateProductsQuanitity = (data, productId) => {
-        return data.map(item => item.id === productId ? fetchItemById(productId, data) : item)
     }
 
     const quantityAdd = async (productId, addProductPrice, addProductQuantity) => {
@@ -75,22 +70,47 @@ const CartProvider = ({ children }) => {
         }
     }
 
-    const quantityRemove = (id, price, quantity) => {
+    const quantityRemove = async (id, price, quantity) => {
+        // if (quantity === 1) {
+        //     removeFromCart(id);
+        // } else {
+        //     const productObj = { id, price, quantity: quantity - 1, data: products, removeFromCart };
+        //     const filterProducts = productQuantityDecrement({ ...productObj, data: cartItems });
+        //     const newProducts = updateProductsQuanitity(products, id);
+        //     productDispatch({
+        //         type: 'FETCH_PRODUCTS_SUCCESS',
+        //         payload: {
+        //             products: newProducts,
+        //             error: null,
+        //             loading: false
+        //         }
+        //     });
+        //     setCartItems(filterProducts);
+        // }
         if (quantity === 1) {
-            removeFromCart(id);
+            await removeFromCart(id);
         } else {
-            const productObj = { id, price, quantity: quantity - 1, data: products, removeFromCart };
-            const filterProducts = productQuantityDecrement({ ...productObj, data: cartItems });
-            const newProducts = updateProductsQuanitity(products, id);
-            productDispatch({
-                type: 'FETCH_PRODUCTS_SUCCESS',
-                payload: {
-                    products: newProducts,
-                    error: null,
-                    loading: false
+            const data = await updateCartItemQuantity(id, 'decrement');
+            if (data?.length > 0) {
+                const findProduct = data?.find(({ _id }) => _id === id);
+                if (findProduct) {
+                    const newProducts = products.map(item => {
+                        if (item._id === findProduct?._id) {
+                            return item = findProduct;
+                        }
+                        return { ...item };
+                    });
+                    productDispatch({
+                        type: 'FETCH_PRODUCTS_SUCCESS',
+                        payload: {
+                            products: newProducts,
+                            error: null,
+                            loading: false
+                        }
+                    });
                 }
-            });
-            setCartItems(filterProducts);
+                setCartItems(data);
+            }
         }
     }
 
