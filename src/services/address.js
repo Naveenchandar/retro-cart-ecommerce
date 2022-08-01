@@ -1,9 +1,13 @@
 import { baseUrl } from "services";
 import { fetchNotification } from "utils";
 
-export const fetchAddresses = async () => {
+export const fetchAddresses = async (token) => {
     try {
-        const { status, data: { address } } = await baseUrl.get('user/addresses');
+        const { status, data: { address } } = await baseUrl.get('user/addresses', {
+            headers: {
+                'authorization': token
+            }
+        });
         if (status === 200) {
             return address
         } else {
@@ -19,9 +23,13 @@ export const fetchAddresses = async () => {
     }
 }
 
-export const addressAddNew = async (address) => {
+export const addressAddNew = async (address, token) => {
     try {
-        const { status, data: { address: addresses } } = await baseUrl.post('user/address', { address });
+        const { status, data: { address: addresses } } = await baseUrl.post('user/address', { address }, {
+            headers: {
+                'authorization': token
+            }
+        });
         if (status === 201) {
             fetchNotification({ type: 'success', message: 'Address added successfully' });
             return addresses;
@@ -38,9 +46,13 @@ export const addressAddNew = async (address) => {
     }
 }
 
-export const removeAddress = async (addressId) => {
+export const removeAddress = async (addressId, token) => {
     try {
-        const { status, data: { address } } = await baseUrl.delete(`user/address/${addressId}`);
+        const { status, data: { address } } = await baseUrl.delete(`user/address/${addressId}`, {
+            headers: {
+                'authorization': token
+            }
+        });
         if (status === 200) {
             fetchNotification({ type: 'success', message: 'Address removed successfully' });
             return address;
@@ -57,9 +69,13 @@ export const removeAddress = async (addressId) => {
     }
 }
 
-export const addressUpdate = async (address) => {
+export const addressUpdate = async (address, token) => {
     try {
-        const { status, data: { address: address1 } } = await baseUrl.post(`user/address/edit/${address._id}`, { address });
+        const { status, data: { address: address1 } } = await baseUrl.post(`user/address/edit/${address._id}`, { address }, {
+            headers: {
+                'authorization': token
+            }
+        });
         if (status === 200) {
             fetchNotification({ type: 'success', message: 'Address updated successfully' });
             return address1;

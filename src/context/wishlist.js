@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { addWishlistItem, fetchWishListItems, removeWishlistItem } from 'services/wishlist';
 import { useAuth } from './AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const WishListContext = createContext([]);
 
@@ -15,13 +16,19 @@ const WishListContext = createContext([]);
 const WishListProvider = ({ children }) => {
     const [wishlistItems, setWishlistItems] = useState([]);
     const { user } = useAuth();
-    
+    const navigate = useNavigate();
+    const token = localStorage.getItem('retro-cart-token');
+
     useEffect(() => {
-        const token = localStorage.getItem('retro-cart-token');
-        if (user?.email && token) {
+        const userToken = localStorage.getItem('retro-cart-token');
+        if (user?.email && userToken) {
             (async () => {
-                const wishlist = await fetchWishListItems();
-                setWishlistItems(wishlist || []);
+                const wishlist = await fetchWishListItems(userToken);
+                if (wishlist) {
+                    setWishlistItems(wishlist);
+                } else {
+                    setWishlistItems([]);
+                }
             })();
             // localStorage.setItem("retro-wishlist", JSON.stringify(addedToWishList));
         }
@@ -47,12 +54,20 @@ const WishListProvider = ({ children }) => {
         //     ]
         //     setWishlistItems(wishListItemsAdd);
         // }
-        if (type === 'remove') {
-            const data = await removeWishlistItem(product);
-            setWishlistItems(data);
+        if (user?.email && token) {
+            if (type === 'remove') {
+                const data = await removeWishlistItem(product, token);
+                if (data) {
+                    setWishlistItems(data);
+                }
+            } else {
+                const data = await addWishlistItem(product, token);
+                if (data) {
+                    setWishlistItems(data);
+                }
+            }
         } else {
-            const data = await addWishlistItem(product);
-            setWishlistItems(data);
+            navigate('/login');
         }
     }
 

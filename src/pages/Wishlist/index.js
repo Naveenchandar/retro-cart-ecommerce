@@ -9,7 +9,7 @@ export const WishList = () => {
         <section className="wishlist_main p-4 flex_row justify_even">
             {wishlistItems.length > 0 ?
                 wishlistItems.map(product => {
-                    const { image, productName, price, oldPrice, id, rating, discount, qty = 1 } = product;
+                    const { image, productName, price, oldPrice, id } = product;
                     return (
                         <div className="ecommerce_card wishlist_card flex_column" key={id}>
                             <div className="product_image w-100">
@@ -29,7 +29,7 @@ export const WishList = () => {
                                 </div>
                                 <button className="product_add_cart py-2 m-2 move_cart_btn"
                                     onClick={() => {
-                                        addToCart({ id, image, productName, price, oldPrice, rating, discount, qty });
+                                        addToCart(product);
                                         addToWishlist(product, 'remove');
                                     }}
                                 >

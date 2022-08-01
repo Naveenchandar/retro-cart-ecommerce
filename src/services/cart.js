@@ -1,9 +1,13 @@
 import { baseUrl } from "services";
 import { fetchNotification } from "utils";
 
-export const fetchCartItems = async () => {
+export const fetchCartItems = async (token) => {
     try {
-        const { status, data: { cart } } = await baseUrl.get('user/cart');
+        const { status, data: { cart } } = await baseUrl.get('user/cart', {
+            headers: {
+                'authorization': token
+            }
+        });
         if (status === 200) {
             return cart
         } else {
@@ -19,9 +23,15 @@ export const fetchCartItems = async () => {
     }
 }
 
-export const addCartItem = async (product) => {
+export const addCartItem = async (product, token) => {
     try {
-        const { status, data: { cart } } = await baseUrl.post('user/cart', { product });
+        const { status, data: { cart } } = await baseUrl.post('user/cart', { product },
+            {
+                headers: {
+                    'authorization': token
+                }
+            }
+        );
         if (status === 201) {
             return cart
         } else {
@@ -37,9 +47,13 @@ export const addCartItem = async (product) => {
     }
 }
 
-export const removeCartItem = async (productId) => {
+export const removeCartItem = async (productId, token) => {
     try {
-        const { status, data: { cart } } = await baseUrl.delete(`user/cart/${productId}`);
+        const { status, data: { cart } } = await baseUrl.delete(`user/cart/${productId}`, {
+            headers: {
+                'authorization': token
+            }
+        });
         if (status === 200) {
             return cart;
         } else {
@@ -55,9 +69,16 @@ export const removeCartItem = async (productId) => {
     }
 }
 
-export const updateCartItemQuantity = async (productId, type) => {
+export const updateCartItemQuantity = async (productId, type, token) => {
     try {
-        const { status, data: { cart } } = await baseUrl.post(`user/cart/${productId}`, { action: { type } });
+        const { status, data: { cart } } = await baseUrl.post(`user/cart/${productId}`,
+            { action: { type } },
+            {
+                headers: {
+                    'authorization': token
+                }
+            }
+        );
         if (status === 200) {
             return cart;
         } else {
@@ -73,9 +94,13 @@ export const updateCartItemQuantity = async (productId, type) => {
     }
 }
 
-export const clearAllCartItems = async () => {
+export const clearAllCartItems = async (token) => {
     try {
-        const { status, data: { cart } } = await baseUrl.get(`user/cart/clear`);
+        const { status, data: { cart } } = await baseUrl.get(`user/cart/clear`,{
+            headers: {
+                'authorization': token
+            }
+        });
         if (status === 201) {
             fetchNotification({ type: 'success', message: 'Order placed successfully' });
             return cart;

@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth, useProducts } from ".";
 import { useWishlist } from "./wishlist";
 import { addCartItem, fetchCartItems, removeCartItem, updateCartItemQuantity } from "services/cart";
+import { useNavigate } from "react-router-dom";
 
 const CartContext = createContext([]);
 
@@ -19,13 +20,19 @@ const CartProvider = ({ children }) => {
 
     const { addToWishlist } = useWishlist();
     const { user } = useAuth();
-    
+    const navigate = useNavigate();
+    const token = localStorage.getItem('retro-cart-token');
+
     useEffect(() => {
-        const token = localStorage.getItem('retro-cart-token');
-        if (user?.email&& token) {
+        const userToken = localStorage.getItem('retro-cart-token');
+        if (user?.email && userToken) {
             (async () => {
-                const cart = await fetchCartItems();
-                setCartItems(cart || []);
+                const cart = await fetchCartItems(userToken);
+                if (cart) {
+                    setCartItems(cart);
+                } else {
+                    setCartItems([]);
+                }
             })();
         }
         // localStorage.setItem("retro-cart", JSON.stringify(cartItems));
@@ -57,7 +64,7 @@ const CartProvider = ({ children }) => {
         //     }
         // });
         // setCartItems(filterProduct);
-        const data = await updateCartItemQuantity(productId, 'increment');
+        const data = await updateCartItemQuantity(productId, 'increment', token);
         if (data?.length > 0) {
             const findProduct = data?.find(({ _id }) => _id === productId);
             if (findProduct) {
@@ -100,7 +107,7 @@ const CartProvider = ({ children }) => {
         if (quantity === 1) {
             await removeFromCart(id);
         } else {
-            const data = await updateCartItemQuantity(id, 'decrement');
+            const data = await updateCartItemQuantity(id, 'decrement', token);
             if (data?.length > 0) {
                 const findProduct = data?.find(({ _id }) => _id === id);
                 if (findProduct) {
@@ -127,16 +134,20 @@ const CartProvider = ({ children }) => {
     const addToCart = async (product) => {
         // product.quantity = 1;
         // setCartItems([...cartItems, product]);
-        const data = await addCartItem(product);
-        if (data) {
-            setCartItems(data);
+        if (user?.email && token) {
+            const data = await addCartItem(product, token);
+            if (data) {
+                setCartItems(data);
+            }
+        } else {
+            navigate('/login');
         }
     }
 
     const removeFromCart = async (id) => {
         // const removeProduct = cartItems.filter(item => item.id !== id);
         // setCartItems(removeProduct);
-        const data = await removeCartItem(id);
+        const data = await removeCartItem(id, token);
         if (data) {
             setCartItems(data);
         }

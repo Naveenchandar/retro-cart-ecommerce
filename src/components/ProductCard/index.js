@@ -7,13 +7,13 @@ export const ProductCard = ({ product }) => {
     const { addToWishlist, wishlistItems } = useWishlist();
 
     const { cartItems, addToCart, removeFromCart } = useCart();
-    const findCartProduct = cartItems.find(item => item._id === _id);
+    const findCartProduct = cartItems?.find(item => item._id === _id);
 
     return (
         <div className="ecommerce_card flex_column product_item">
             <div className="product_image w-100 my-1">
                 <img src={image} className="w-100 block m_auto" alt={alt} />
-                {wishlistItems.find(item => item._id === _id) ?
+                {wishlistItems?.find(item => item._id === _id) ?
                     <i
                         className='fa fa-heart product_wishlist pointer'
                         style={{ color: 'red' }}

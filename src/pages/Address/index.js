@@ -43,14 +43,15 @@ export const Address = () => {
     const [addressList, setAddressList] = useState([]);
 
     const navigate = useNavigate();
-    const { width, height } = useWindowSize()
+    const token = localStorage.getItem('retro-cart-token');
+    const { width, height } = useWindowSize();
 
     const addAddress = async (address) => {
         if (editAddressForm) {
             updateAddress(address);
         } else {
             try {
-                const addresses = await addressAddNew(address);
+                const addresses = await addressAddNew(address, token);
                 setAddressList(addresses);
                 setShowAddressForm(!showAddressForm)
             } catch (error) {
@@ -72,7 +73,7 @@ export const Address = () => {
         //     setAddressList(updateItemById(addressList, addressInfo));
         //     setShowAddressForm(false);
         // }
-        const updateAddresses = await addressUpdate(addressData);
+        const updateAddresses = await addressUpdate(addressData, token);
         setAddressList(updateAddresses);
         setShowAddressForm(false);
     }
@@ -110,7 +111,7 @@ export const Address = () => {
     const placeOrder = async (order) => {
         try {
             console.error("Placed order successfully!", "success");
-            const data = await clearAllCartItems();
+            const data = await clearAllCartItems(token);
             if (data) {
                 setCartItems([]);
                 deliveryClick();
@@ -162,7 +163,7 @@ export const Address = () => {
     }
 
     const deleteAddress = async (addressId) => {
-        const addresses = await removeAddress(addressId);
+        const addresses = await removeAddress(addressId, token);
         setAddressList(addresses);
     }
 
