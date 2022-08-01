@@ -19,9 +19,9 @@ const CartProvider = ({ children }) => {
 
     const { addToWishlist } = useWishlist();
     const { user } = useAuth();
-    const token = localStorage.getItem('retro-cart-token');
-
+    
     useEffect(() => {
+        const token = localStorage.getItem('retro-cart-token');
         if (user?.email&& token) {
             (async () => {
                 const cart = await fetchCartItems();
@@ -29,7 +29,7 @@ const CartProvider = ({ children }) => {
             })();
         }
         // localStorage.setItem("retro-cart", JSON.stringify(cartItems));
-    }, [cartItems,  token, user?.email]);
+    }, [cartItems, user?.email]);
 
     useEffect(() => {
         return () => {

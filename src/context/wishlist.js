@@ -15,17 +15,23 @@ const WishListContext = createContext([]);
 const WishListProvider = ({ children }) => {
     const [wishlistItems, setWishlistItems] = useState([]);
     const { user } = useAuth();
-    const token = localStorage.getItem('retro-cart-token');
-
+    
     useEffect(() => {
-        if (user?.email&& token) {
+        const token = localStorage.getItem('retro-cart-token');
+        if (user?.email && token) {
             (async () => {
                 const wishlist = await fetchWishListItems();
                 setWishlistItems(wishlist || []);
             })();
             // localStorage.setItem("retro-wishlist", JSON.stringify(addedToWishList));
         }
-    }, [wishlistItems, token, user?.email]);
+    }, [wishlistItems, user?.email]);
+
+    useEffect(() => {
+        return () => {
+            setWishlistItems([]);
+        }
+    }, [])
 
     const addToWishlist = async (product, type) => {
         // const { image, productName, discount, price, oldPrice, rating, id } = product;
