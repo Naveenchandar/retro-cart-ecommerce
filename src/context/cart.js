@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useProducts } from ".";
 import { useWishlist } from "./wishlist";
-import { addCartItem, clearAllCartItems, fetchCartItems, removeCartItem, updateCartItemQuantity } from "services/cart";
+import { addCartItem, fetchCartItems, removeCartItem, updateCartItemQuantity } from "services/cart";
 
 const CartContext = createContext([]);
 
