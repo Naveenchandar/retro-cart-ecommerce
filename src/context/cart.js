@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useProducts } from ".";
 import { useWishlist } from "./wishlist";
 import { addCartItem, fetchCartItems, removeCartItem, updateCartItemQuantity } from "services/cart";
+import { useLocation } from "react-router-dom";
 
 const CartContext = createContext([]);
 
@@ -18,14 +19,17 @@ const CartProvider = ({ children }) => {
     const { productState: { products }, productDispatch } = useProducts();
 
     const { addToWishlist } = useWishlist();
+    const { pathname } = useLocation();
 
     useEffect(() => {
-        (async () => {
-            const cart = await fetchCartItems();
-            setCartItems(cart);
-        })();
+        if (pathname === '/cart') {
+            (async () => {
+                const cart = await fetchCartItems();
+                setCartItems(cart);
+            })();
+        }
         // localStorage.setItem("retro-cart", JSON.stringify(cartItems));
-    }, [cartItems]);
+    }, [cartItems, pathname]);
 
     useEffect(() => {
         return () => {

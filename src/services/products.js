@@ -10,7 +10,7 @@ export const fetchAllProducts = async () => {
             throw new Error('Error occurred while loading products, please try again');
         }
     } catch (error) {
-        console.error('fetchCartItems:', error?.response?.data?.error || error?.response?.data?.message || error?.message)
+        console.error('fetchAllProducts:', error?.response?.data?.error || error?.response?.data?.message || error?.message)
         fetchNotification({
             type: 'error',
             message: 'Error occurred while loading products, please try again'
