@@ -11,10 +11,10 @@ export const fetchCartItems = async () => {
         }
     } catch (error) {
         console.error('fetchCartItems:', error?.response?.data?.error || error?.response?.data?.message || error?.message)
-        fetchNotification({
-            type: 'error',
-            message: 'Error occurred while loading cart, please try again'
-        });
+        // fetchNotification({
+        //     type: 'error',
+        //     message: 'Error occurred while loading cart, please try again'
+        // });
         return false;
     }
 }

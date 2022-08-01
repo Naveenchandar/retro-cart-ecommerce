@@ -11,10 +11,10 @@ export const fetchWishListItems = async () => {
         }
     } catch (error) {
         console.error('fetchWishListItems:', error?.response?.data?.error || error?.response?.data?.message || error?.message)
-        fetchNotification({
-            type: 'error',
-            message: 'Error occurred while loading wishlst, please try again'
-        });
+        // fetchNotification({
+        //     type: 'error',
+        //     message: 'Error occurred while loading wishlst, please try again'
+        // });
         return false;
     }
 }
