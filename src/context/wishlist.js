@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { addWishlistItem, fetchWishListItems, removeWishlistItem } from 'services/wishlist';
+import { useAuth } from './AuthContext';
 
 const WishListContext = createContext([]);
 
@@ -14,17 +14,18 @@ const WishListContext = createContext([]);
 
 const WishListProvider = ({ children }) => {
     const [wishlistItems, setWishlistItems] = useState([]);
-    const { pathname } = useLocation();
+    const { user } = useAuth();
+    const token = localStorage.getItem('retro-cart-token');
 
     useEffect(() => {
-        if (pathname === '/wishlist') {
+        if (user?.email&& token) {
             (async () => {
                 const wishlist = await fetchWishListItems();
-                setWishlistItems(wishlist);
+                setWishlistItems(wishlist || []);
             })();
             // localStorage.setItem("retro-wishlist", JSON.stringify(addedToWishList));
         }
-    }, [wishlistItems, pathname]);
+    }, [wishlistItems, token, user?.email]);
 
     const addToWishlist = async (product, type) => {
         // const { image, productName, discount, price, oldPrice, rating, id } = product;

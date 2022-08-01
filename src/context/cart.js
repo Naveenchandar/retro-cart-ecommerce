@@ -1,8 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useProducts } from ".";
+import { useAuth, useProducts } from ".";
 import { useWishlist } from "./wishlist";
 import { addCartItem, fetchCartItems, removeCartItem, updateCartItemQuantity } from "services/cart";
-import { useLocation } from "react-router-dom";
 
 const CartContext = createContext([]);
 
@@ -19,17 +18,18 @@ const CartProvider = ({ children }) => {
     const { productState: { products }, productDispatch } = useProducts();
 
     const { addToWishlist } = useWishlist();
-    const { pathname } = useLocation();
+    const { user } = useAuth();
+    const token = localStorage.getItem('retro-cart-token');
 
     useEffect(() => {
-        if (pathname === '/cart') {
+        if (user?.email&& token) {
             (async () => {
                 const cart = await fetchCartItems();
-                setCartItems(cart);
+                setCartItems(cart || []);
             })();
         }
         // localStorage.setItem("retro-cart", JSON.stringify(cartItems));
-    }, [cartItems, pathname]);
+    }, [cartItems,  token, user?.email]);
 
     useEffect(() => {
         return () => {
