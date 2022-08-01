@@ -68,11 +68,13 @@ export const SignUp = () => {
     const handleSignup = async (event) => {
         event.preventDefault();
         try {
-            if (handleValidation() && await signupService(info)) {
-                navigate('/login');
-            } else {
-                throw new Error('Email or Password is incorrect');
-            }
+            if (handleValidation()) {
+                if(await signupService(info)){
+                    navigate('/login');
+                } else {
+                    throw new Error('Email or Password is incorrect');
+                }
+            } 
         } catch (error) {
             setErrorInfo({ error: error?.response?.data?.errors?.[0] || error?.message || error || 'Something went wrong, Please try again.' });
         }
