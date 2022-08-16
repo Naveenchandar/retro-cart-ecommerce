@@ -1,8 +1,18 @@
-import { ProductQuantity } from 'components';
+import { useState } from 'react';
+import { ProductQuantity, Alert } from 'components';
 
 export const CartProduct = ({ product:
     { id, image, productName, price, oldPrice, discount, qty, _id: productId },
     product, quantityAdd, quantityRemove, removeFromCart, moveToWishList, addQuantity }) => {
+
+    const [isAlertOpen, setIsAlertOpen] = useState(false);
+
+    const showAlert = () => setIsAlertOpen(true);
+
+    const closeAlert = () => setIsAlertOpen(false);
+
+    // () => removeFromCart(productId)
+
     return (
         <section className="cart_list my-2" key={id}>
             <div className="cart_item border flex_row cart_gap justify_spacebtw">
@@ -22,13 +32,32 @@ export const CartProduct = ({ product:
                         quantity={qty}
                     />
                     <div className="cart_btns flex flex_dcolumn w-100">
-                        <button className="btn btn_outlined w-100" onClick={() => removeFromCart(productId)}>Remove from cart</button>
+                        <button
+                            className="btn btn_outlined w-100"
+                            onClick={showAlert}
+                        >Remove from cart</button>
                         <button className="btn btn_primary w-100" onClick={() => moveToWishList(product)}>
                             Move to wishlist
                         </button>
                     </div>
                 </div>
             </div>
+            {isAlertOpen && (
+                <Alert open={isAlertOpen} close={closeAlert} className='root-modal'>
+                    <div className='alert_section'>
+                        <h2 className='alert_title'>Remove Item</h2>
+                        <p className='alert_message'>
+                            Are you sure you want to remove this item?
+                        </p>
+                        <button className="btn btn_outlined">
+                            Cancel
+                        </button>
+                        <button className="btn btn_outlined">
+                            Remove
+                        </button>
+                    </div>
+                </Alert>
+            )}
         </section>
     )
 }

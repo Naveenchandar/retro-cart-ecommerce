@@ -9,3 +9,4 @@ export { NavRoutes } from 'components/Routes';
 export { ProductCard } from 'components/ProductCard';
 export { ProductFilter } from 'components/ProductFilter';
 export { ErrorFallback, ErrorBoundaries } from 'components/ErrorBoundary';
+export { Alert } from 'components/alert';
